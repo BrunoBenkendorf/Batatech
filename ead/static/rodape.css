@@ -1,0 +1,74 @@
+/* Rodapé */
+@import url('https://fonts.googleapis.com/css2?family=Modak&family=Titan+One&display=swap');
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+main {
+  flex: 1;
+}
+
+.footer {
+  background-color: white;
+  color: black;
+  padding: 20px 10px;
+  font-size: 12px;
+  border: black;
+  border-style: solid;
+  border-top: 1px;
+}
+
+.footer-top {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  flex-wrap: wrap;
+  margin-bottom: 10px;
+}
+
+.footer-text {
+  font-family: "Modak", system-ui;
+  font-weight: 300;
+  font-size: 35px;
+  color: #eb9f5c;
+}
+
+.footer-bottom {
+  text-align: center;
+}
+
+.footer-bottom p {
+  margin: 5px 0;
+}
+
+.footer-links {
+  margin-top: 5px;
+}
+
+.footer-links a {
+  color: black;
+  text-decoration: none;
+  margin: 0 5px;
+}
+
+.footer-links a:hover {
+  text-decoration: underline;
+}
+
+.dot {
+  margin: 0 3px;
+  color: #ccc;
+}
+
+/* Linha separadora */
+hr {
+  border: none;
+  border-top: 1px solid #4d5a6b;
+  margin: 10px 0;
+}

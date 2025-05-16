@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="UTF-8">
+  <title>BataTECH Cursos EAD</title>
+  {% load static %}
+  <link rel="stylesheet" href="{% static 'home.css' %}">
+  <link rel="stylesheet" href="{% static 'cabecalho.css' %}">
+  <link rel="stylesheet" href="{% static 'rodape.css' %}">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+  <link rel="icon" type="image/png" href="{% static 'imagens/favicon.png' %}">
+</head>
+
+<body class="banner">
+  <script src="{% static 'js/configglobal.js' %}"></script>
+  <header id="efeito">
+    <div class="container">
+      <div class="flex">
+        <a href="home">
+          <h1>BataTECH</h1>
+        </a>
+        <div class="pesquisa-container">
+          <input type="text" class="pesquisa-txt" placeholder="Pesquisar...">
+          <a href="#" class="pesquisa-btn"><i class="bi bi-search"></i></a>
+        </div>
+        <div class="acoes-header">
+          <nav>
+            <ul>
+              <li><a href="config"><i class="bi bi-gear"></i></a></li>
+              <li><a href="faleconosco"><i class="bi bi-headset"></i></a></li>
+            </ul>
+          </nav>
+          <div class="btn-login">
+            <a href="login"><button>LOGIN</button></a>
+          </div>
+          <div class="btn-cadastrar">
+            <a href="cadastro"><button>CADASTRAR</button></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="container-apoio">
+      <div class="info-apoios">
+        <div class="info-apoio">
+          <img src="{% static 'imagens/Apoio.png' %}" alt="imagem de apoio">
+        </div>
+      </div>
+    </section>
+
+    <section class="container-boxes">
+      <div class="info-boxes">
+        <div class="info-box">
+          <i class="bi bi-mortarboard"></i>
+          <h3>Cursos para todos os níveis</h3>
+          <p>Aprenda do básico ao avançado, com cursos ideais para todos os perfis.</p>
+        </div>
+        <div class="info-box">
+          <i class="bi bi-patch-check"></i>
+          <h3>Certificação reconhecida</h3>
+          <p>Certificação reconhecida por empresas, com conteúdo de qualidade e carga horária certificada.</p>
+        </div>
+        <div class="info-box">
+          <i class="bi bi-person-video2"></i>
+          <h3>Professores especializados</h3>
+          <p>Aulas ministradas por profissionais experientes e atuantes no mercado.</p>
+        </div>
+        <div class="info-box">
+          <i class="bi bi-display"></i>
+          <h3>Plataforma intuitiva</h3>
+          <p>Fácil de usar com recursos que facilitam o aprendizado sem ser complicado.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="container-curso">
+      <div class="info-cursos">
+        {% for curso in cursos %}
+        <div class="info-curso">
+          <a href="{% url 'curso_detalhado' curso.id_curso %}">
+            <img src="{{ curso.imagem.url }}" alt="{{ curso.nome }}">
+          </a>
+          <h3>{{ curso.nome }}</h3>
+          <h4>{{ curso.descricao }}</h4>
+          <br>
+          <p>R${{ curso.valor }}</p>
+        </div>
+        {% empty %}
+        <p>Nenhum curso disponível.</p>
+        {% endfor %}
+      </div>
+    </section>
+  </main>
+
+  <script src="{% static 'js/menu.js' %}"></script>
+  <footer class="footer">
+    <div class="footer-top">
+      <div class="footer-logo-block">
+        <h2 class="footer-text">BataTECH</h2>
+        <div class="social-icons"></div>
+      </div>
+    </div>
+    <hr>
+    <div class="footer-bottom">
+      <p>Copyright ©2025 BataTECH - Todos os direitos reservados</p>
+      <div class="footer-links">
+        <a href="{% url 'faleconosco' %}">Central de Ajuda</a>
+        <span class="dot">•</span>
+        <a href="{% url 'contato' %}">Contato</a>
+        <span class="dot">•</span>
+        <a href="{% url 'termo' %}">Termos de uso</a>
+        <span class="dot">•</span>
+        <a href="{% url 'privacidade' %}">Política de privacidade</a>
+      </div>
+    </div>
+  </footer>
+</body>
+
+</html>

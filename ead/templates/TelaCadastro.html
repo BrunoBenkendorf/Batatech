@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="UTF-8">
+  <title>BataTECH Cursos EAD</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  {% load static %}
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+  <link rel="stylesheet" href="{% static 'cad.css' %}">
+  <link rel="icon" type="image/png" href="{% static 'imagens/favicon.png' %}">
+</head>
+
+<body class="bg-custom font-sans flex items-center justify-center min-h-screen relative">
+  <script src="{% static 'js/configglobal.js' %}"></script>
+
+  <div class="max-w-2xl w-full mx-auto p-8 bg-white shadow-md rounded-lg">
+    <div class="text-center mb-6">
+      <h1 class="text-2xl font-semibold">Crie sua conta</h1>
+      <p class="text-gray-600 text-sm">Escolha seu perfil e preencha os dados corretamente.</p>
+    </div>
+
+    <!-- Formulário começa aqui -->
+    <form id="cadastroForm" class="space-y-4" method="POST" action="{% url 'realizar_cadastro' %}">
+      {% csrf_token %}
+
+      <!-- Escolha do Perfil -->
+      <div class="flex justify-center gap-6 mb-6">
+        <input type="radio" name="perfil" value="aluno" id="perfil-aluno" class="hidden peer/aluno" checked />
+        <label for="perfil-aluno"
+          class="peer-checked/aluno:bg-orange-600 peer-checked/aluno:text-white px-4 py-2 border rounded-lg cursor-pointer transition">
+          Aluno
+        </label>
+
+        <input type="radio" name="perfil" value="professor" id="perfil-professor" class="hidden peer/professor" />
+        <label for="perfil-professor"
+          class="peer-checked/professor:bg-orange-600 peer-checked/professor:text-white px-4 py-2 border rounded-lg cursor-pointer transition">
+          Professor
+        </label>
+      </div>
+
+      <!-- Campos comuns -->
+      <div class="flex gap-4">
+        <input type="text" name="nome" id="nome" placeholder="Nome" required class="w-1/2 border rounded px-3 py-2" />
+        <input type="text" name="sobrenome" id="sobrenome" placeholder="Sobrenome" required
+          class="w-1/2 border rounded px-3 py-2" />
+      </div>
+      <input type="email" name="email" id="email" placeholder="E-mail" required
+        class="w-full border rounded px-3 py-2" />
+      <input type="tel" name="telefone" id="telefone" placeholder="Telefone (DDD)" required
+        class="w-full border rounded px-3 py-2" />
+      <input type="text" name="cpf" id="cpf" placeholder="CPF" required class="w-full border rounded px-3 py-2" />
+
+      <!-- Senha -->
+      <div class="relative">
+        <input type="password" name="senha" id="senha" placeholder="Senha (mínimo 6 caracteres)" required
+          class="w-full border rounded px-3 py-2 pr-10" />
+        <i class="bi bi-eye-slash absolute top-1/2 right-3 transform -translate-y-1/2 cursor-pointer" id="toggleSenha"
+          onclick="toggleSenha('senha', 'toggleSenha')"></i>
+      </div>
+
+      <div class="relative">
+        <input type="password" id="confirmaSenha" placeholder="Confirmar senha" required
+          class="w-full border rounded px-3 py-2 pr-10" />
+        <i class="bi bi-eye-slash absolute top-1/2 right-3 transform -translate-y-1/2 cursor-pointer"
+          id="toggleConfirmaSenha" onclick="toggleSenha('confirmaSenha', 'toggleConfirmaSenha')"></i>
+      </div>
+
+      <!-- Campos adicionais para Professor -->
+      <div id="camposProfessor" class="space-y-4 hidden">
+        <input type="text" name="formacao" id="formacao" placeholder="Formação Acadêmica"
+          class="w-full border rounded px-3 py-2" />
+        <textarea name="experiencia" id="experiencia" placeholder="Experiência profissional (resumo)"
+          class="w-full border rounded px-3 py-2" rows="4"></textarea>
+      </div>
+
+      <!-- Botões -->
+      <div class="text-center space-x-4 pt-4">
+        <a href="javascript:history.back()" class="btn btn-white btn-animated">Voltar</a>
+        <button type="submit" class="btn btn-white btn-animated">Enviar</button>
+      </div>
+    </form>
+
+    <p id="erro" class="text-red-600 text-sm mt-4 text-center hidden"></p>
+  </div>
+
+  <script src="{% static 'js/cad.js' %}"></script>
+</body>
+
+</html>

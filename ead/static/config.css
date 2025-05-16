@@ -1,0 +1,41 @@
+.config-container {
+  margin: 150px auto;
+  max-width: 600px;
+  background: white;
+  padding: 30px;
+  border-radius: 15px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  font-family: 'Rajdhani', sans-serif;
+}
+
+.config-container h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #ff8f2d;
+}
+
+.config-item {
+  margin: 20px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.config-item label {
+  font-weight: bold;
+  color: #333;
+}
+
+.config-container button {
+  margin-top: 30px;
+  padding: 10px 20px;
+  background-color: #000;
+  color: #ff8f2d;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  width: 100%;
+}
+
+.config-container button:hover {
+  background-color: #333;}

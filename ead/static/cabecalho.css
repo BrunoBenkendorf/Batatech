@@ -1,0 +1,159 @@
+/* Cabeçalho */
+header {
+  width: 100%;
+  padding: 20px 0;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  background: transparent;
+  transition: background-color 0.5s;
+}
+
+header.rolagem {
+  background-color: #ffffff;
+  padding: 10px 0;
+  border: black;
+  border-style: solid;
+  border-width: 1px;
+}
+
+/* Container flexível */
+.container {
+  max-width: 100%;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.flex {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* Logo */
+h1 {
+  font-family: "Modak", system-ui;
+  font-weight: 400;
+  font-size: 45px;
+  color: #eb9f5c;
+}
+
+/* Pesquisa */
+.pesquisa-container {
+  position: relative;
+  background: #000;
+  height: 40px;
+  padding: 10px;
+  border-radius: 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.pesquisa-txt {
+  border: none;
+  background: none;
+  outline: none;
+  padding: 0;
+  color: #fff;
+  font-size: 16px;
+  width: 400px;
+  transition: 0.5s;
+}
+
+.pesquisa-container:hover>.pesquisa-txt {
+  width: 600px;
+  padding: 0 6px;
+}
+
+.pesquisa-btn {
+  width: 45px;
+  height: 35px;
+  border-radius: 45%;
+  background: #000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: 0.5s;
+}
+
+.pesquisa-btn i {
+  color: #eb9f5c;
+  font-size: 16px;
+}
+
+/* Navegação e ações */
+.acoes-header {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+/* Ícones do menu */
+header ul {
+  list-style-type: none;
+  display: flex;
+  gap: 25px;
+}
+
+header ul li {
+  font-size: 27px;
+}
+
+header ul li a {
+  color: black;
+  text-decoration: none;
+}
+
+/* Usuário */
+.user-info-prof {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+}
+
+.user-icon-prof {
+  font-size: 27px;
+}
+
+/* Dropdown usuário */
+.dropdown-content {
+  display: none;
+  position: absolute;
+  top: 100%;
+  right: 0;
+  margin-top: 10px;
+  background-color: white;
+  min-width: 140px;
+  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.15);
+  border-radius: 8px;
+  overflow: hidden;
+  z-index: 1000;
+
+  /* Animação */
+  opacity: 0;
+  transform: translateY(-10px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.dropdown-content.show {
+  display: block;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  font-size: 14px;
+}
+
+.dropdown-content a:hover {
+  background-color: #eb9f5c;
+  color: white;
+}

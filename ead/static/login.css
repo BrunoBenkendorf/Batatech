@@ -1,0 +1,138 @@
+* {
+  box-sizing: border-box;
+  font-family: 'Inter', sans-serif;
+}
+
+body {
+  margin: 0;
+  background-color: #fdf5ad;
+  color: #fff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 100vh;
+  padding: 0 5%;
+}
+
+.left {
+  max-width: 50%;
+}
+
+.left h1 {
+  font-size: 2.5em;
+  margin-bottom: 0.3em;
+}
+
+.left strong {
+  font-weight: 700;
+  font-size: 3em;
+}
+
+.login-box {
+  background: #fff;
+  color: #333;
+  padding: 2em;
+  border-radius: 10px;
+  width: 350px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+
+.logo {
+  margin-top: 2em;
+  max-width: 300px;
+}
+
+.login-box input {
+  width: 100%;
+  padding: 0.8em;
+  margin-top: 0.8em;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 1em;
+}
+
+.text-box {
+  margin-left: 0vw;
+  margin-top: 2vh;
+}
+
+.text {
+  margin-left: 11vw;
+  margin-top: 2vh;
+}
+
+.btn:link,
+.btn:visited {
+  text-transform: uppercase;
+  text-decoration: none;
+  padding: 10px 30px;
+  display: inline-block;
+  border-radius: 100px;
+  transition: all .2s;
+  position: absolute;
+}
+
+.btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+.btn:active {
+  transform: translateY(-1px);
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+}
+
+.btn-white {
+  background-color: black;
+  color: #777;
+}
+
+.btn::after {
+  content: "";
+  display: inline-block;
+  height: 100%;
+  width: 100%;
+  border-radius: 100px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -1;
+  transition: all .4s;
+}
+
+.btn-white::after {
+  background-color: black;
+}
+
+.btn:hover::after {
+  transform: scaleX(1.4) scaleY(1.6);
+  opacity: 0;
+}
+
+.btn-animated {
+  animation: moveInBottom 5s ease-out;
+  animation-fill-mode: backwards;
+}
+
+@keyframes moveInBottom {
+  0% {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0px);
+  }
+}
+
+.help-links {
+  text-align: center;
+  margin-top: 1em;
+  font-size: 0.9em;
+}
+
+.help-links a {
+  color: #333;
+  text-decoration: none;
+}

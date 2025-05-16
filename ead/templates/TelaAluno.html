@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>BataTECH Cursos EAD</title>
+  {%load static%}
+  <link rel="stylesheet" href="{%static 'aluno.css'%}">
+  <link rel="stylesheet" href="{%static 'cabecalho.css'%}">
+  <link rel="stylesheet" href="{%static 'rodape.css'%}">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+  <link rel="icon" type="image/png" href="{% static 'imagens/favicon.png' %}">
+</head>
+
+<body>
+  <header id="efeito">
+    <div class="container">
+      <div class="flex">
+        <a href="../home">
+          <h1>BataTECH</h1>
+        </a>
+
+        <div class="pesquisa-container">
+          <input type="text" class="pesquisa-txt" placeholder="Pesquisar cursos...">
+          <a href="#" class="pesquisa-btn">
+            <i class="bi bi-search"></i>
+          </a>
+        </div>
+
+        <div class="acoes-header">
+          <nav>
+            <ul>
+              <li><a href="../faleconosco"><i class="bi bi-headset"></i></a></li>
+            </ul>
+          </nav>
+          <div class="user-dropdown" id="userDropdown">
+            <div class="aluno-info" id="alunoinfo">
+              <div class="icone-aluno">👨‍🎓</div>
+              <span>{{ aluno.nome }}</span> <!-- mostra o nome real -->
+              <i class="bi bi-caret-down-fill"></i>
+            </div>
+            <div class="dropdown-content" id="dropdownMenu">
+              <a href="../perfil">Perfil</a>
+              <a href="../config">Configurações</a>
+              <a href="{% url 'logout' %}">Sair</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="principal">
+    <br><br><br><br>
+    <section class="sessao-curso">
+      <h2>Meus Cursos</h2>
+      <div class="curso-card">
+        <div class="fundo">
+          <img src="{% static 'imagens/informaticabasica.png' %}" alt="Curso 1" class="imagens">
+        </div>
+        <br>
+        <h3>Introdução à Programação</h3>
+        <p>Acesse o conteúdo e acompanhe seu progresso.</p>
+        <br>
+        <a href="curso" class="btn btn-white btn-animate">Acessar</a>
+      </div>
+      <br>
+      <br>
+      <div class="curso-card">
+        <div class="fundo">
+          <img src="{% static 'imagens/Telas.jpg.png' %}" alt="Curso 2" class="imagens">
+        </div>
+        <br>
+        <h3>Desenvolvimento Web</h3>
+        <p>Aprenda HTML, CSS e JavaScript.</p>
+        <br>
+        <a href="curso" class="btn btn-white btn-animate">Acessar</a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-top">
+      <div class="footer-logo-block">
+        <h2 class="footer-text">BataTECH</h2>
+        <div class="social-icons"></div>
+      </div>
+    </div>
+    <hr>
+    <div class="footer-bottom">
+      <p>Copyright ©2025 BataTECH - Todos os direitos reservados</p>
+      <div class="footer-links">
+        <a href="{% url 'faleconosco' %}">Central de Ajuda</a>
+        <span class="dot">•</span>
+        <a href="{% url 'contato' %}">Contato</a>
+        <span class="dot">•</span>
+        <a href="{% url 'termo' %}">Termos de uso</a>
+        <span class="dot">•</span>
+        <a href="{% url 'privacidade' %}">Política de privacidade</a>
+      </div>
+    </div>
+  </footer>
+  <script src="{%static 'js/aluno.js'%}"></script>
+  <script src="{%static 'js/menu.js'%}"></script>
+</body>
+
+</html>

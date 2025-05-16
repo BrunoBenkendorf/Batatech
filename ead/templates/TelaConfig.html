@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="UTF-8">
+  <title>BataTECH Cursos EAD</title>
+  {%load static%}
+  <link rel="stylesheet" href="{%static 'site.css'%}">
+  <link rel="stylesheet" href="{%static 'config.css'%}">
+  <link rel="icon" type="image/png" href="{% static 'imagens/favicon.png' %}">
+</head>
+
+<body class="banner">
+  <script src="{%static 'js/configglobal.js'%}"></script>
+
+  <div class="config-container">
+    <h2>Configurações da Plataforma</h2>
+
+    <div class="config-item">
+      <label for="temaEscuro">Tema escuro</label>
+      <input type="checkbox" id="temaEscuro">
+    </div>
+
+    <div class="config-item">
+      <label for="notificacoes">Notificações</label>
+      <input type="checkbox" id="notificacoes">
+    </div>
+
+    <div class="config-item">
+      <label for="volume">Volume</label>
+      <input type="range" id="volume" min="0" max="100" value="50">
+      <span id="volumeValue">50</span>
+    </div>
+
+    <div class="config-item">
+      <label for="velocidade">Velocidade de vídeo</label>
+      <select id="velocidade">
+        <option value="0.75">0.75x</option>
+        <option value="1">1x</option>
+        <option value="1.25">1.25x</option>
+        <option value="1.5">1.5x</option>
+        <option value="2">2x</option>
+      </select>
+    </div>
+
+    <div class="config-item">
+      <label for="idioma">Idioma</label>
+      <select id="idioma">
+        <option value="pt">Português</option>
+        <option value="en">Inglês</option>
+        <option value="es">Espanhol</option>
+      </select>
+    </div>
+
+    <div class="config-item">
+      <label for="notificacaoTipo">Tipo de notificação</label>
+      <select id="notificacaoTipo">
+        <option value="email">Email</option>
+        <option value="push">Push</option>
+        <option value="ambos">Ambos</option>
+        <option value="nenhum">Nenhum</option>
+      </select>
+    </div>
+
+    <div class="config-item">
+      <label for="legendaAtiva">Legendas</label>
+      <input type="checkbox" id="legendaAtiva">
+    </div>
+    <a href="home"><button onclick="salvarConfiguracoes()">Salvar configurações</button></a>
+  </div>
+
+  <script src="{%static 'js/config.js'%}"></script>
+</body>
+
+</html>

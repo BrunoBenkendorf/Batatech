@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="UTF-8">
+  {%load static%}
+  <title>BataTECH Cursos EAD</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://cdn.tailwindcss.com" rel="stylesheet">
+  <link rel="stylesheet" href="{%static 'termo.css'%}">
+  <link rel="stylesheet" href="{%static 'rodape.css'%}">
+  <link rel="icon" type="image/png" href="{% static 'imagens/favicon.png' %}">
+</head>
+
+<body class="bg-gray-100 text-gray-800 font-sans p-6">
+  <div class="container max-w-3xl mx-auto">
+    <h1 class="text-2xl font-bold mb-4">Termos de Uso</h1>
+    <p class="mb-4">
+      Ao utilizar a Plataforma EAD, você concorda com os seguintes termos:
+    </p>
+    <ul class="list-disc pl-6 mb-4">
+      <li>Você se compromete a fornecer informações verdadeiras no cadastro.</li>
+      <li>O uso da plataforma deve ser feito de forma ética e legal.</li>
+      <li>É proibido compartilhar suas credenciais com terceiros.</li>
+      <li>O uso indevido, como disseminação de conteúdo ofensivo ou tentativa de violação de segurança, resultará em
+        sanções.</li>
+    </ul>
+    <p>
+      Ao continuar utilizando nossos serviços, você reconhece que leu e concorda com os termos acima.
+    </p>
+    <div class="text-box">
+      <a href="javascript:history.back()" class="btn btn-white btn-animated">Voltar</a>
+    </div>
+  </div>
+</body>
+
+</html>

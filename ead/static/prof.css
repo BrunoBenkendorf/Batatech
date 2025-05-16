@@ -1,0 +1,85 @@
+@import url('https://fonts.googleapis.com/css2?family=Modak&family=Titan+One&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;400;500;600;700&display=swap');
+
+/* Reset geral */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Corpo */
+body {
+  font-family: Arial, sans-serif;
+  background:#fdf5ad;
+}
+
+a {
+  text-decoration: none;
+}
+
+/* Conteúdo principal */
+.main-content {
+  text-align: center;
+  padding: 140px 20px 20px 20px;
+  /* padding-top aumentado por causa do header fixo */
+}
+
+.course-section {
+  margin: 30px 0;
+}
+
+.course-section img {
+  width: 80%;
+  max-width: 600px;
+  border-radius: 10px;
+  margin: 10px 0;
+}
+
+/* Botão criar curso */
+.text-box {
+  margin-top: 20px;
+}
+
+.btn {
+  text-transform: uppercase;
+  text-decoration: none;
+  padding: 13px 100px;
+  display: inline-block;
+  border-radius: 100px;
+  transition: all 0.2s;
+  position: relative;
+  font-family: "Rajdhani", sans-serif;
+  font-weight: 500;
+  font-size: 15px;
+  cursor: pointer;
+}
+
+.btn-white {
+  background-color: black;
+  color: #eb9f5c;
+}
+
+.btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+.btn::after {
+  content: "";
+  display: inline-block;
+  height: 100%;
+  width: 100%;
+  border-radius: 100px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -1;
+  background-color: black;
+  transition: all 0.4s;
+}
+
+.btn:hover::after {
+  transform: scaleX(1.4) scaleY(1.6);
+  opacity: 0;
+}

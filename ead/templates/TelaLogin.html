@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  {%load static%}
+  <title>BataTECH Cursos EAD</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{%static 'login.css'%}">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="icon" type="image/png" href="{% static 'imagens/favicon.png' %}">
+</head>
+
+<body>
+  <script src="{%static 'js/configglobal.js'%}"></script>
+  <div class="left">
+    <h1>Ambiente virtual da <br><strong>Batatech</strong></h1>
+    <a href="../home"><img class="logo" src="{% static 'imagens/LogoEAD.png' %}" alt="Avatar Batatech"></a>
+  </div>
+
+  <div class="login-box">
+    {% if erro %}
+    <p style="color: red; font-weight: bold;">{{ erro }}</p>
+    {% endif %}
+    <form method="POST" action="{% url 'login' %}">
+      {% csrf_token %}
+      <input type="text" name="email" placeholder="E-mail" required>
+      <input type="password" name="senha" placeholder="Senha" required>
+      <button type="submit">Acessar</button>
+      <a href="javascript:history.back()" class="btn btn-white btn-animated">Voltar</a>
+      <div class="help-links">
+        <p><a href="../faleconosco">Fale Conosco</a></p>
+    </form>
+  </div>
+  </div>
+</body>
+
+</html>

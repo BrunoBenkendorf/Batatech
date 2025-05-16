@@ -1,0 +1,119 @@
+body {
+  font-family: 'Inter', sans-serif;
+  background: #fdf5ad;
+  padding: 2em;
+  display: flex;
+  justify-content: center;
+}
+
+.form-container {
+  background: #fff;
+  padding: 2em;
+  border-radius: 8px;
+  width: 100%;
+  height: 700px;
+  max-width: 500px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+  margin-bottom: 1em;
+  color: #333;
+}
+
+label {
+  display: block;
+  margin-top: 1em;
+  margin-bottom: 0.3em;
+  font-weight: 600;
+}
+
+select {
+  width: 100%;
+  padding: 0.8em;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 1em;
+}
+
+textarea {
+  width: 96%;
+  padding: 0.8em;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 1em;
+}
+
+input {
+  width: 95%;
+  padding: 0.8em;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 1em;
+}
+
+textarea {
+  height: 200px;
+  resize: vertical;
+}
+
+/* Estilos para os botões */
+.btn:link,
+.btn:visited {
+  text-transform: uppercase;
+  text-decoration: none;
+  padding: 10px 40px;
+  display: inline-block;
+  border-radius: 100px;
+  transition: all 0.1s;
+  background-color: black;
+  color: #eb9f5c;
+  position: relative;
+  overflow: hidden;
+}
+
+.btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+.btn:active {
+  transform: translateY(-1px);
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+}
+
+.btn::after {
+  content: "";
+  display: inline-block;
+  height: 100%;
+  width: 100%;
+  border-radius: 12px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: black;
+  z-index: -1;
+  transition: all 0.1s;
+}
+
+.btn:hover::after {
+  transform: scaleX(1.4) scaleY(1.6);
+  opacity: 0;
+}
+
+.btn-animated {
+  animation: moveInBottom 5s ease-out;
+  animation-fill-mode: backwards;
+}
+
+@keyframes moveInBottom {
+  0% {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0px);
+  }
+}
