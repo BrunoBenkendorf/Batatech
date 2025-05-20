@@ -1,13 +1,19 @@
 from django.shortcuts import render, redirect
-from .models import Aluno, Professor,MensagemContato,Curso
+from .models import Aluno, Professor,MensagemContato,Curso,Matricula
 from django.http import HttpResponse
 from django.db import IntegrityError
 from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import get_object_or_404
+from datetime import date
+
 @csrf_exempt
 def index(request):
     cursos = Curso.objects.all()
-    return render(request, 'TelaHome.html', {'cursos': cursos})
+    aluno_id = request.session.get('aluno_id')
+    return render(request, 'TelaHome.html', {
+        'cursos': cursos,
+        'aluno_logado': bool(aluno_id)
+    })
 def login_usuario(request):
     if request.method == "POST":
         email = request.POST.get("email")
@@ -15,8 +21,8 @@ def login_usuario(request):
 
         try:
             aluno = Aluno.objects.get(email=email, senha=senha)
-            request.session['aluno_id'] = aluno.id_aluno # salva ID na sessão
-            return redirect('aluno')
+            request.session['aluno_id'] = aluno.id_aluno
+            return redirect('home')
         except Aluno.DoesNotExist:
             try:
                 professor = Professor.objects.get(email=email, senha=senha)
@@ -60,7 +66,7 @@ def perfil(request):
 def professor(request):
     professor_id = request.session.get('professor_id')
     if not professor_id:
-        return redirect('login')  # força login se não autenticado
+        return redirect('login') 
 
     professor = get_object_or_404(Professor, id_professor=professor_id)
     return render(request, 'TelaProfessor.html', {'professor': professor})
@@ -69,29 +75,39 @@ def curso(request):
 def aluno(request):
     aluno_id = request.session.get('aluno_id')
     if not aluno_id:
-        return redirect('login')  # força login se não autenticado
+        return redirect('login') 
 
     aluno = get_object_or_404(Aluno, id_aluno=aluno_id)
-    return render(request, 'TelaAluno.html', {'aluno': aluno})
+
+    # Busca cursos matriculados
+    matriculas = Matricula.objects.filter(id_aluno=aluno).select_related('id_curso')
+    cursos = [m.id_curso for m in matriculas]
+
+    # Checa se houve pagamento
+    pagamento_sucesso = request.session.pop('pagamento_sucesso', False)
+
+    return render(request, 'TelaAluno.html', {
+        'aluno': aluno,
+        'cursos': cursos,
+        'pagamento_sucesso': pagamento_sucesso
+    })
 def altera(request):
     return render(request=request, template_name='TelaAltCurso.html')
 def seleciona(request):
     return render(request=request, template_name='TelaSelecionarCurso.html')
 def pagamento(request):
+    aluno_id = request.session.get('aluno_id')
+    if not aluno_id:
+        return redirect('login')
+
     nome_curso = request.GET.get('curso', '')
     valor = request.GET.get('valor', '')
+
     return render(request, 'TelaPagamento.html', {
         'nome_curso': nome_curso,
-        'valor': valor
+        'valor': valor,
+        'aluno_logado': True
     })
-def nr10(request):
-    return render(request=request, template_name='TelaNR_10.html')
-def nr12(request):
-    return render(request=request, template_name='TelaNR_12.html')
-def nr35(request):
-    return render(request=request, template_name='TelaNR_35.html')
-def informatica(request):
-    return render(request=request, template_name='TelaInformaticaBasica.html')
 def realizar_cadastro(request):
     if request.method == "POST":
         perfil = request.POST.get("perfil")
@@ -104,7 +120,6 @@ def realizar_cadastro(request):
 
         nome_completo = f"{nome} {sobrenome}"
 
-        # Verifica se o e-mail já existe em Aluno ou Professor
         if Aluno.objects.filter(email=email).exists() or Professor.objects.filter(email=email).exists():
             return HttpResponse("E-mail já cadastrado. Utilize outro e-mail.")
 
@@ -159,37 +174,45 @@ def salvarcurso(request):
                 imagem=imagem
             )
             return redirect("home")
-            return HttpResponse("Curso cadastrado com sucesso!")
         except IntegrityError:
             return HttpResponse("Erro: Curso com esse nome já existe.")
 
 def logout_view(request):
-    request.session.flush()  # limpa todos os dados da sessão
+    request.session.flush()  
     return redirect('login')
 def processar_pagamento(request):
+    aluno_id = request.session.get('aluno_id')
+    if not aluno_id:
+        return HttpResponse("Apenas alunos logados podem realizar o pagamento.", status=403)
+
     if request.method == "POST":
-        curso = request.POST.get("curso")
+        curso_nome = request.POST.get("curso")
         valor = request.POST.get("valor")
         metodo = request.POST.get("pagamento")
-        
-        if metodo == "pix":
-            chave_pix = request.POST.get("chave_pix")
-            return HttpResponse(f"Pagamento via PIX com chave {chave_pix} para o curso {curso} no valor de R$ {valor} recebido.")
 
-        elif metodo == "boleto":
-            return HttpResponse(f"Boleto gerado com sucesso para o curso {curso} no valor de R$ {valor}.")
+        try:
+            curso_obj = Curso.objects.get(nome=curso_nome)
+        except Curso.DoesNotExist:
+            return HttpResponse("Curso não encontrado.", status=404)
 
-        elif metodo in ["debito", "credito"]:
-            numero_cartao = request.POST.get("numero_cartao")
-            validade = request.POST.get("validade")
-            cvv = request.POST.get("cvv")
-            parcelas = request.POST.get("parcelas") if metodo == "credito" else None
-            return HttpResponse(f"Pagamento via {metodo.upper()} com cartão final {numero_cartao[-4:]} para o curso {curso} no valor de R$ {valor} recebido.")
+        # Cria matrícula (evita duplicidade)
+        Matricula.objects.get_or_create(
+            id_aluno_id=aluno_id,
+            id_curso=curso_obj,
+            defaults={'data_matricula': date.today()}
+        )
 
-        return HttpResponse("Método de pagamento inválido.", status=400)
+        # → Redireciona para a página do aluno após o pagamento
+        request.session['pagamento_sucesso'] = True
+        return redirect('aluno')
+
     return HttpResponse("Método não permitido", status=405)
 def curso_detalhado(request, curso_id):
     curso = get_object_or_404(Curso, id_curso=curso_id)
-    return render(request, 'TelaCursoDetalhado.html', {'curso': curso})
+    aluno_logado = 'aluno_id' in request.session
+    return render(request, 'TelaCursoDetalhado.html', {
+        'curso': curso,
+        'aluno_logado': aluno_logado
+    })
 def contato(request):
     return render(request, 'TelaContato.html')

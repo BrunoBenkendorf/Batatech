@@ -55,28 +55,22 @@
     <br><br><br><br>
     <section class="sessao-curso">
       <h2>Meus Cursos</h2>
+
+      {% for curso in cursos %}
       <div class="curso-card">
         <div class="fundo">
-          <img src="{% static 'imagens/informaticabasica.png' %}" alt="Curso 1" class="imagens">
+          <img src="{{ curso.imagem.url }}" alt="{{ curso.nome }}" class="imagens">
         </div>
         <br>
-        <h3>Introdução à Programação</h3>
-        <p>Acesse o conteúdo e acompanhe seu progresso.</p>
+        <h3>{{ curso.nome }}</h3>
+        <p>{{ curso.descricao|truncatechars:100 }}</p>
         <br>
-        <a href="curso" class="btn btn-white btn-animate">Acessar</a>
+        <a href="{% url 'curso' %}" class="btn btn-white btn-animate">Acessar</a>
       </div>
-      <br>
-      <br>
-      <div class="curso-card">
-        <div class="fundo">
-          <img src="{% static 'imagens/Telas.jpg.png' %}" alt="Curso 2" class="imagens">
-        </div>
-        <br>
-        <h3>Desenvolvimento Web</h3>
-        <p>Aprenda HTML, CSS e JavaScript.</p>
-        <br>
-        <a href="curso" class="btn btn-white btn-animate">Acessar</a>
-      </div>
+      <br><br>
+      {% empty %}
+      <p>Você ainda não está matriculado em nenhum curso.</p>
+      {% endfor %}
     </section>
   </main>
 
@@ -104,5 +98,11 @@
   <script src="{%static 'js/aluno.js'%}"></script>
   <script src="{%static 'js/menu.js'%}"></script>
 </body>
-
+{% if pagamento_sucesso %}
+<script>
+  window.onload = function() {
+    alert("Pagamento confirmado! Curso liberado com sucesso.");
+  };
+</script>
+{% endif %}
 </html>
