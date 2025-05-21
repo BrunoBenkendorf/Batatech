@@ -65,7 +65,7 @@
         <h3>{{ curso.nome }}</h3>
         <p>{{ curso.descricao|truncatechars:100 }}</p>
         <br>
-        <a href="{% url 'curso' %}" class="btn btn-white btn-animate">Acessar</a>
+        <a href="{% url 'curso' curso.id_curso %}" class="btn btn-white btn-animate">Acessar</a>
       </div>
       <br><br>
       {% empty %}
@@ -100,9 +100,10 @@
 </body>
 {% if pagamento_sucesso %}
 <script>
-  window.onload = function() {
+  window.onload = function () {
     alert("Pagamento confirmado! Curso liberado com sucesso.");
   };
 </script>
 {% endif %}
+
 </html>

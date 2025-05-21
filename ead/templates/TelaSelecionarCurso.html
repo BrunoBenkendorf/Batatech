@@ -21,25 +21,18 @@
     </div>
   </div>
 
-  <script>
-    const cursos = [
-      { id: 1, titulo: "Curso de JavaScript" },
-      { id: 2, titulo: "Curso de HTML e CSS" },
-      { id: 3, titulo: "Curso de Python" }
-    ];
-
-    const lista = document.getElementById('listaCursos');
-    cursos.forEach(curso => {
-      const li = document.createElement('li');
-      li.innerHTML = `
-        <div class="flex justify-between items-center border p-4 rounded-lg hover:bg-orange-100">
-          <span class="font-medium">${curso.titulo}</span>
-          <a href="altera?id=${curso.id}" class="text-orange-600 hover:underline">Alterar</a>
-        </div>
-      `;
-      lista.appendChild(li);
-    });
-  </script>
+<ul id="listaCursos" class="space-y-4">
+  {% for curso in cursos %}
+    <li>
+      <div class="flex justify-between items-center border p-4 rounded-lg hover:bg-orange-100">
+        <span class="font-medium">{{ curso.nome }}</span>
+        <a href="{% url 'Altera' %}?id={{ curso.id_curso }}" class="text-orange-600 hover:underline">Alterar</a>
+      </div>
+    </li>
+  {% empty %}
+    <li>Nenhum curso cadastrado.</li>
+  {% endfor %}
+</ul>
 </body>
 
 </html>

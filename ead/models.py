@@ -73,14 +73,13 @@ class Aula(models.Model):
 
 
 class Arquivo(models.Model):
-    id_arquivo = models.AutoField(db_column='ID_Arquivo', primary_key=True)
-    tipo = models.CharField(db_column='Tipo', max_length=20)
-    url_arquivo = models.CharField(db_column='URL_Arquivo', max_length=45)
-    descricao = models.CharField(db_column='Descricao', max_length=45, blank=True, null=True)
-    aula_id_aula = models.ForeignKey(Aula, models.DO_NOTHING, db_column='Aula_ID_Aula')
+    tipo = models.CharField(max_length=50)
+    descricao = models.CharField(max_length=255, default='Descrição não informada')
+    url_arquivo = models.FileField(upload_to='arquivos/')  # ✅ Caminho dentro de /media/arquivos/
+    aula_id_aula = models.ForeignKey('Aula', on_delete=models.CASCADE)
 
-    class Meta:
-        db_table = 'arquivo'
+    def __str__(self):
+        return self.descricao
 
 
 class Exercicio(models.Model):

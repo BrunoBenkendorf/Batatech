@@ -5,45 +5,43 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>BataTECH Cursos EAD</title>
-    {%load static%}
-    <link rel="stylesheet" href="{%static 'curso.css'%}">
-    <link rel="stylesheet" href="{%static 'cabecalho.css'%}">
-    <link rel="stylesheet" href="{%static 'rodape.css'%}">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'curso.css' %}">
+    <link rel="stylesheet" href="{% static 'cabecalho.css' %}">
+    <link rel="stylesheet" href="{% static 'rodape.css' %}">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
     <link rel="icon" type="image/png" href="{% static 'imagens/favicon.png' %}">
 </head>
 
 <body>
-    <script src="{%static 'js/configglobal.js'%}"></script>
+    <script src="{% static 'js/configglobal.js' %}"></script>
 
     <header id="efeito">
         <div class="container">
             <div class="flex">
-                <a href="home">
+                <a href="{% url 'home' %}">
                     <h1>BataTECH</h1>
                 </a>
                 <div class="pesquisa-container">
                     <input type="text" class="pesquisa-txt" placeholder="Pesquisar cursos...">
-                    <a href="#" class="pesquisa-btn">
-                        <i class="bi bi-search"></i>
-                    </a>
+                    <a href="#" class="pesquisa-btn"><i class="bi bi-search"></i></a>
                 </div>
                 <div class="acoes-header">
                     <nav>
                         <ul>
-                            <li><a href="faleconosco"><i class="bi bi-headset"></i></a></li>
+                            <li><a href="{% url 'faleconosco' %}"><i class="bi bi-headset"></i></a></li>
                         </ul>
                     </nav>
                     <div class="user-dropdown" id="userDropdown">
                         <div class="aluno-info" id="alunoinfo">
                             <div class="icone-aluno">👨‍🎓</div>
-                            <span>Aluno</span>
+                            <span>{{ aluno.nome|default:"Aluno" }}</span>
                             <i class="bi bi-caret-down-fill"></i>
                         </div>
                         <div class="dropdown-content" id="dropdownMenu">
-                            <a href="perfil">Perfil</a>
-                            <a href="config">Configurações</a>
-                            <a href="home">Sair</a>
+                            <a href="{% url 'perfil' %}">Perfil</a>
+                            <a href="{% url 'config' %}">Configurações</a>
+                            <a href="{% url 'logout' %}">Sair</a>
                         </div>
                     </div>
                 </div>
@@ -53,11 +51,11 @@
 
     <main class="principal">
         <ul>
-            <li> <a href="../aluno"><i class="bi bi-arrow-left-circle"></i></a></li>
+            <li><a href="{% url 'aluno' %}"><i class="bi bi-arrow-left-circle"></i></a></li>
         </ul>
 
         <section class="sessao-curso">
-            <h2>Curso: Desenvolvimento Web</h2>
+            <h2>Curso: {{ curso.nome }}</h2>
 
             <div class="aba-navegacao">
                 <button class="aba ativo" onclick="trocarAba('atividades')">Atividades</button>
@@ -65,39 +63,48 @@
                 <button class="aba" onclick="trocarAba('provas')">Provas</button>
             </div>
 
+            <!-- ATIVIDADES -->
             <div id="atividades" class="conteudo-aba ativo">
+                {% for arquivo in arquivos %}
+                {% if arquivo.tipo == "atividade" %}
                 <div class="card-conteudo">
-                    <h3>Atividade 1</h3>
-                    <p>Crie uma página HTML com título e parágrafos.</p>
+                    <h3>{{ arquivo.descricao }}</h3>
+                    <a href="{{ arquivo.url_arquivo.url }}" download>Baixar Atividade</a>
                 </div>
-                <div class="card-conteudo">
-                    <h3>Atividade 2</h3>
-                    <p>Adicione uma folha de estilo CSS ao seu projeto.</p>
-                </div>
+                {% endif %}
+                {% empty %}
+                <p>Nenhuma atividade disponível.</p>
+                {% endfor %}
             </div>
 
+            <!-- BIBLIOTECA -->
             <div id="biblioteca" class="conteudo-aba">
+                {% for arquivo in arquivos %}
+                {% if arquivo.tipo == "pdf" or arquivo.tipo == "video" %}
                 <div class="card-conteudo">
-                    <h3>Material PDF</h3>
-                    <a href="#">Download: Guia de HTML5</a>
+                    <h3>{{ arquivo.descricao }}</h3>
+                    <a href="{{ arquivo.url_arquivo.url }}" target="_blank">
+                        {% if arquivo.tipo == "pdf" %}Download PDF{% else %}Assistir Vídeo{% endif %}
+                    </a>
                 </div>
-                <div class="card-conteudo">
-                    <h3>Vídeo Aula</h3>
-                    <a href="#">Assistir: CSS Flexbox</a>
-                </div>
+                {% endif %}
+                {% empty %}
+                <p>Nenhum material disponível.</p>
+                {% endfor %}
             </div>
 
+            <!-- PROVAS -->
             <div id="provas" class="conteudo-aba">
+                {% for arquivo in arquivos %}
+                {% if arquivo.tipo == "prova" %}
                 <div class="card-conteudo">
-                    <h3>Prova 1</h3>
-                    <p>Data: 10 de Junho</p>
-                    <a href="#">Ver detalhes</a>
+                    <h3>{{ arquivo.descricao }}</h3>
+                    <a href="{{ arquivo.url_arquivo.url }}" target="_blank">Ver Prova</a>
                 </div>
-                <div class="card-conteudo">
-                    <h3>Prova 2</h3>
-                    <p>Data: 25 de Junho</p>
-                    <a href="#">Ver detalhes</a>
-                </div>
+                {% endif %}
+                {% empty %}
+                <p>Nenhuma prova disponível.</p>
+                {% endfor %}
             </div>
         </section>
     </main>
@@ -124,8 +131,15 @@
         </div>
     </footer>
 
-    <script src="{%static 'js/curso.js'%}"></script>
-    <script src="{%static 'js/aluno.js'%}"></script>
+    <script src="{% static 'js/curso.js' %}"></script>
+    <script>
+        function trocarAba(id) {
+            document.querySelectorAll('.conteudo-aba').forEach(el => el.classList.remove('ativo'));
+            document.querySelectorAll('.aba').forEach(el => el.classList.remove('ativo'));
+            document.getElementById(id).classList.add('ativo');
+            event.target.classList.add('ativo');
+        }
+    </script>
 </body>
 
 </html>
