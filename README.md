@@ -2,7 +2,7 @@
 
 ## Descrição do Projeto
 
-BataTECH é uma plataforma de cursos online em desenvolvimento, projetada para facilitar o aprendizado de alunos e a gestão de cursos por professores. Este projeto é parte do curso do 3º semestre e visa proporcionar uma experiência de aprendizado interativa e acessível.
+BataTECH é uma plataforma de cursos online em desenvolvimento, projetada para facilitar o aprendizado de alunos e a gestão de cursos por professores. Este projeto é parte do curso de desenvolvimento de sistemas do 3º semestre e visa proporcionar uma experiência de aprendizado interativa e acessível.
 
 ---
 
@@ -78,7 +78,7 @@ O projeto ainda está em fase de desenvolvimento. Funcionalidades estão sendo i
 
 ## Contato
 
-Para dúvidas, sugestões ou contribuições, entre em contato pelo email: seuemail@exemplo.com
+Para dúvidas, sugestões ou contribuições, entre em contato pelo email: brunobenkendorf11@gmail.com
 
 ---
 
