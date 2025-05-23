@@ -15,7 +15,7 @@
   <script src="{%static 'js/configglobal.js'%}"></script>
   <div class="form-container">
     <h2>Fale Conosco</h2>
-    <form action="faleconosco" method="post">
+    <form method="post" action="{% url 'faleconosco' %}">
       {% csrf_token %}
       <label for="para">Para:</label>
       <select id="para" name="para">
@@ -37,7 +37,7 @@
       <textarea id="mensagem" name="mensagem" required></textarea>
       <div class="text-center space-x-4 pt-4">
         <a href="javascript:history.back()" class="btn btn-white btn-animated">Voltar</a>
-        <button type="submit">Enviar</button>
+        <button type="submit" class="btn btn-white btn-animated">Enviar</button>
       </div>
     </form>
   </div>

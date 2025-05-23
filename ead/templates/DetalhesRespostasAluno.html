@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Respostas do Aluno - {{ aluno.nome }}</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-yellow-100 min-h-screen p-6">
+  <div class="max-w-4xl mx-auto bg-white p-8 rounded shadow">
+    <h1 class="text-3xl font-bold text-gray-800 mb-6 text-center">
+      Respostas de {{ aluno.nome }} <br />
+      na avaliação "{{ avaliacao.titulo }}"
+    </h1>
+
+    {% if respostas %}
+      <div class="space-y-6">
+        {% for resposta in respostas %}
+          <div class="p-4 rounded border 
+            {% if resposta.resposta_escolhida == resposta.questao.resposta_correta %}
+              border-green-500 bg-green-50
+            {% else %}
+              border-red-500 bg-red-50
+            {% endif %}
+          ">
+            <p><strong>Questão:</strong> {{ resposta.questao.enunciado }}</p>
+            <p><strong>Resposta Escolhida:</strong> {{ resposta.resposta_escolhida }}</p>
+            <p><strong>Resposta Correta:</strong> {{ resposta.questao.resposta_correta }}</p>
+            <p>
+              <strong>Status:</strong>
+              {% if resposta.resposta_escolhida == resposta.questao.resposta_correta %}
+                <span class="text-green-600 font-bold">✅ Correta</span>
+              {% else %}
+                <span class="text-red-600 font-bold">❌ Incorreta</span>
+              {% endif %}
+            </p>
+          </div>
+        {% endfor %}
+      </div>
+    {% else %}
+      <p class="text-center text-gray-600 italic">Nenhuma resposta encontrada para este aluno nesta avaliação.</p>
+    {% endif %}
+
+    <div class="mt-8 text-center">
+      <a href="{% url 'resultados_professor' %}" class="inline-block bg-orange-500 hover:bg-orange-600 text-white px-6 py-3 rounded transition">
+        Voltar para Avaliações
+      </a>
+    </div>
+  </div>
+</body>
+</html>

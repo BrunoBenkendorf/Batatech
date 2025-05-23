@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Adicionar Questões - BataTECH</title>
+  {% load static %}
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" />
+  <link rel="stylesheet" href="{% static 'cad.css' %}" />
+  <link rel="icon" type="image/png" href="{% static 'imagens/favicon.png' %}">
+</head>
+
+<body class="bg-custom font-sans min-h-screen flex items-center justify-center px-4">
+  <div class="max-w-2xl w-full bg-white shadow-md rounded-lg p-8 mt-16">
+    <div class="text-center mb-6">
+      <h1 class="text-3xl font-bold">Adicionar Questões</h1>
+      <p class="text-gray-600 text-sm">Prova: <strong>{{ avaliacao.titulo }}</strong></p>
+      <p class="text-sm text-gray-600">
+        Questões adicionadas: <strong>{{ total_questoes }}</strong> de <strong>{{ quantidade_questoes }}</strong>
+      </p>
+    </div>
+
+    <form method="post" class="space-y-5">
+      {% csrf_token %}
+
+      <!-- Enunciado -->
+      <div>
+        <label for="enunciado" class="block font-medium mb-1">Enunciado da Questão</label>
+        <textarea name="enunciado" id="enunciado" rows="4" class="w-full border rounded px-3 py-2" required></textarea>
+      </div>
+
+      <!-- Alternativas -->
+      <div>
+        <label class="block font-medium mb-1">Alternativas</label>
+
+        <div class="space-y-3">
+          <div>
+            <label for="alternativa_a" class="block text-sm font-medium">Alternativa A</label>
+            <input type="text" name="alternativa_a" id="alternativa_a" class="w-full border rounded px-3 py-2" required>
+          </div>
+
+          <div>
+            <label for="alternativa_b" class="block text-sm font-medium">Alternativa B</label>
+            <input type="text" name="alternativa_b" id="alternativa_b" class="w-full border rounded px-3 py-2" required>
+          </div>
+
+          <div>
+            <label for="alternativa_c" class="block text-sm font-medium">Alternativa C</label>
+            <input type="text" name="alternativa_c" id="alternativa_c" class="w-full border rounded px-3 py-2" required>
+          </div>
+
+          <div>
+            <label for="alternativa_d" class="block text-sm font-medium">Alternativa D</label>
+            <input type="text" name="alternativa_d" id="alternativa_d" class="w-full border rounded px-3 py-2" required>
+          </div>
+        </div>
+      </div>
+
+      <!-- Resposta Correta -->
+      <div>
+        <label for="resposta_correta" class="block font-medium mb-1">Resposta Correta</label>
+        <select name="resposta_correta" id="resposta_correta" class="w-full border rounded px-3 py-2" required>
+          <option value="">Selecione a correta</option>
+          <option value="A">Alternativa A</option>
+          <option value="B">Alternativa B</option>
+          <option value="C">Alternativa C</option>
+          <option value="D">Alternativa D</option>
+        </select>
+      </div>
+
+      <!-- Botões -->
+      <div class="text-center space-x-4 pt-6">
+        <a href="{% url 'Seleciona' %}"
+          class="bg-gray-300 text-gray-800 px-6 py-2 rounded hover:bg-gray-400 transition">
+          Voltar
+        </a>
+        <button type="submit" class="bg-orange-500 text-white px-6 py-2 rounded hover:bg-orange-600 transition">
+          <i class="bi bi-plus-circle"></i> Adicionar Questão
+        </button>
+      </div>
+    </form>
+  </div>
+
+  <script src="{% static 'js/configglobal.js' %}"></script>
+</body>
+
+</html>

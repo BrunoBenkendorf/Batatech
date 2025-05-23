@@ -73,14 +73,13 @@ class Aula(models.Model):
 
 
 class Arquivo(models.Model):
-    id_arquivo = models.AutoField(db_column='ID_Arquivo', primary_key=True)
-    tipo = models.CharField(db_column='Tipo', max_length=20)
-    url_arquivo = models.CharField(db_column='URL_Arquivo', max_length=45)
-    descricao = models.CharField(db_column='Descricao', max_length=45, blank=True, null=True)
-    aula_id_aula = models.ForeignKey(Aula, models.DO_NOTHING, db_column='Aula_ID_Aula')
+    tipo = models.CharField(max_length=50)
+    descricao = models.CharField(max_length=255, default='Descrição não informada')
+    url_arquivo = models.FileField(upload_to='arquivos/')  # ✅ Caminho dentro de /media/arquivos/
+    aula_id_aula = models.ForeignKey('Aula', on_delete=models.CASCADE)
 
-    class Meta:
-        db_table = 'arquivo'
+    def __str__(self):
+        return self.descricao
 
 
 class Exercicio(models.Model):
@@ -103,8 +102,18 @@ class Avaliacao(models.Model):
 
 class Questao(models.Model):
     id_questao = models.AutoField(db_column='ID_Questao', primary_key=True)
-    enunciado = models.CharField(db_column='Enunciado', max_length=45)
+    enunciado = models.CharField(db_column='Enunciado', max_length=255)
     tipo = models.CharField(db_column='Tipo', max_length=10)
+    alternativa_a = models.CharField(max_length=255)
+    alternativa_b = models.CharField(max_length=255)
+    alternativa_c = models.CharField(max_length=255)
+    alternativa_d = models.CharField(max_length=255)
+    resposta_correta = models.CharField(max_length=1, choices=[
+        ('A', 'A'),
+        ('B', 'B'),
+        ('C', 'C'),
+        ('D', 'D')
+    ])
 
     class Meta:
         db_table = 'questao'
@@ -158,3 +167,18 @@ class MensagemContato(models.Model):
 
     class Meta:
         db_table = 'mensagem_contato'
+class RespostaAluno(models.Model):
+    id_resposta = models.AutoField(primary_key=True)
+    aluno = models.ForeignKey(Aluno, on_delete=models.CASCADE)
+    avaliacao = models.ForeignKey(Avaliacao, on_delete=models.CASCADE)
+    questao = models.ForeignKey(Questao, on_delete=models.CASCADE)
+    resposta_escolhida = models.CharField(max_length=1, choices=[
+        ('A', 'A'),
+        ('B', 'B'),
+        ('C', 'C'),
+        ('D', 'D')
+    ])
+    data_resposta = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        db_table = 'resposta_aluno'

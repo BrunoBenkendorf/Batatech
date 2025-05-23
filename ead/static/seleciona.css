@@ -1,0 +1,79 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+  }
+  
+  .container {
+    background-color: #ffffff;
+    padding: 30px 40px;
+    border-radius: 10px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    width: 360px;
+  }
+  
+  .titulo {
+    font-size: 20px;
+    margin-bottom: 20px;
+  }
+  
+  .dropdown select {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    cursor: pointer;
+  }
+  
+  .botoes {
+    margin-top: 25px;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+  }
+  
+  .botao {
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 6px;
+    font-weight: bold;
+    border: 1px solid #ccc;
+    transition: 0.3s ease;
+    min-width: 100px;
+    text-align: center;
+  }
+  
+  .alterar {
+    background-color: #e67e22;
+    color: white;
+    border: none;
+  }
+  
+  .alterar:hover {
+    background-color: #cf711c;
+  }
+  
+  .voltar {
+    background-color: #ffffff;
+    color: #333;
+    border: 1px solid #999;
+  }
+  
+  .voltar:hover {
+    background-color: #f0f0f0;
+  }
+  
+  /* Desabilitado */
+  .desabilitado {
+    pointer-events: none;
+    background-color: #ddd !important;
+    color: #888 !important;
+    border: 1px solid #ccc !important;
+  }
+  

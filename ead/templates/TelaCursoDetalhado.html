@@ -31,12 +31,21 @@
               <li><a href="{% url 'faleconosco' %}"><i class="bi bi-headset"></i></a></li>
             </ul>
           </nav>
+          {% if aluno_logado %}
+          <div class="btn-login">
+            <a href="{% url 'logout' %}"><button>SAIR</button></a>
+          </div>
+          <div class="btn-cadastrar">
+            <a href="{% url 'aluno' %}"><button>MEU PERFIL</button></a>
+          </div>
+        {% else %}
           <div class="btn-login">
             <a href="{% url 'login' %}"><button>LOGIN</button></a>
           </div>
           <div class="btn-cadastrar">
             <a href="{% url 'cadastro' %}"><button>CADASTRAR</button></a>
           </div>
+        {% endif %}
         </div>
       </div>
     </div>

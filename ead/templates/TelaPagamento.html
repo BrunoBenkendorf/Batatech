@@ -13,10 +13,12 @@
 
 <body>
   <script src="{% static 'js/configglobal.js' %}"></script>
+  {% if aluno_logado %}
   <div class="pagamento-container">
     <h2>Método De Pagamento:</h2>
     <h3>Curso: {{ nome_curso }}</h3>
     <h3>Valor: R$ {{ valor }}</h3>
+
     <form method="post" action="{% url 'processar_pagamento' %}">
       {% csrf_token %}
       <input type="hidden" name="curso" value="{{ nome_curso }}">
@@ -77,6 +79,13 @@
       <a href="javascript:history.back()" class="btn btn-white btn-animated">Voltar</a>
       <button type="submit" class="btn btn-white btn-animated">Enviar</button>
     </form>
+  </div>
+{% else %}
+  <div class="pagamento-container">
+    <h2>Você precisa estar logado como <strong>Aluno</strong> para acessar esta página de pagamento.</h2>
+    <a href="{% url 'login' %}" class="btn btn-white btn-animated">Fazer Login</a>
+  </div>
+{% endif %}
   </div>
   <p id="mensagem-status" style="margin-top: 15px; font-weight: bold; display: none;"></p>
   <script src="{% static 'js/pag.js' %}"></script>
