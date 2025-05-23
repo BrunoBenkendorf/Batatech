@@ -26,6 +26,7 @@ urlpatterns = [
     path('contato/', views.contato, name='contato'),
     path('processar_pagamento/', views.processar_pagamento, name='processar_pagamento'),
     path('salvar_material/', views.salvar_material, name='salvar_material'),
+<<<<<<< HEAD
      path('criar_avaliacao/', views.criar_avaliacao, name='criar_avaliacao'),
     path('avaliacao/<int:avaliacao_id>/questoes/', views.adicionar_questoes, name='adicionar_questoes'),
     path('avaliacao/<int:avaliacao_id>/resultado/', views.visualizar_resultados, name='visualizar_resultados'),
@@ -33,4 +34,6 @@ urlpatterns = [
     path('resultados/professor/', views.resultados_professor, name='resultados_professor'),
      path('resultados_professor/<int:avaliacao_id>/aluno/<int:aluno_id>/', views.detalhes_respostas, name='detalhes_respostas'),
     path('prova/<int:avaliacao_id>/', views.responder_prova, name='responder_prova')
+=======
+>>>>>>> c18069705a47b99e200c32f093958ddf6c5711f0
 ]

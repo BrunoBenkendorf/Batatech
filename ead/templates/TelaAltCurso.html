@@ -20,9 +20,16 @@
       <p class="text-gray-600 text-sm">Atualize os dados do curso conforme necessário.</p>
     </div>
 
+<<<<<<< HEAD
     <form id="formMaterial" method="post" action="{% url 'salvar_material' %}" enctype="multipart/form-data" class="space-y-5">
       {% csrf_token %}
       <input type="hidden" name="curso_id" id="curso_id" value="{{ curso.id_curso }}">
+=======
+    <form method="post" action="{% url 'salvar_material' %}" enctype="multipart/form-data" class="space-y-5">
+      {% csrf_token %}
+
+      <input type="hidden" name="curso_id" value="{{ curso.id_curso }}">
+>>>>>>> c18069705a47b99e200c32f093958ddf6c5711f0
 
       <div>
         <label for="tipo" class="block font-medium mb-1">Tipo de Material</label>
@@ -34,6 +41,7 @@
         </select>
       </div>
 
+<<<<<<< HEAD
       <div id="formularioPadrao">
         <div>
           <label for="descricao" class="block font-medium mb-1">Descrição</label>
@@ -44,6 +52,16 @@
           <label for="arquivo" class="block font-medium mb-1">Arquivo</label>
           <input type="file" name="arquivo" id="arquivo" class="w-full border rounded px-3 py-2" required>
         </div>
+=======
+      <div>
+        <label for="descricao" class="block font-medium mb-1">Descrição</label>
+        <input type="text" name="descricao" id="descricao" class="w-full border rounded px-3 py-2" required>
+      </div>
+
+      <div>
+        <label for="arquivo" class="block font-medium mb-1">Arquivo</label>
+        <input type="file" name="arquivo" id="arquivo" class="w-full border rounded px-3 py-2" required>
+>>>>>>> c18069705a47b99e200c32f093958ddf6c5711f0
       </div>
 
       <div class="text-center space-x-4 pt-6">

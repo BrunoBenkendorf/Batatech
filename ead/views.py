@@ -1,10 +1,17 @@
 from django.shortcuts import render, redirect, get_object_or_404
+<<<<<<< HEAD
 from .models import Aluno, Professor, MensagemContato, Curso, Matricula, Arquivo, Modulo, Aula,Avaliacao, Questao, QuestaoHasAvaliacao,RespostaAluno
+=======
+from .models import Aluno, Professor, MensagemContato, Curso, Matricula, Arquivo, Modulo, Aula
+>>>>>>> c18069705a47b99e200c32f093958ddf6c5711f0
 from django.http import HttpResponse, JsonResponse
 from django.db import IntegrityError
 from django.views.decorators.csrf import csrf_exempt
 from datetime import date
+<<<<<<< HEAD
 from django.contrib import messages
+=======
+>>>>>>> c18069705a47b99e200c32f093958ddf6c5711f0
 
 @csrf_exempt
 def index(request):
@@ -83,6 +90,7 @@ def professor(request):
 def curso(request, id):
     curso_obj = get_object_or_404(Curso, id_curso=id)
     arquivos = Arquivo.objects.filter(aula_id_aula__modulo_id_modulo__curso_id_curso=curso_obj)
+<<<<<<< HEAD
 
     avaliacoes = Avaliacao.objects.filter(modulo_id_modulo__curso_id_curso=curso_obj)
 
@@ -91,6 +99,13 @@ def curso(request, id):
         'arquivos': arquivos,
         'avaliacoes': avaliacoes
     })
+=======
+    return render(request, 'TelaCurso.html', {
+        'curso': curso_obj,
+        'arquivos': arquivos
+    })
+
+>>>>>>> c18069705a47b99e200c32f093958ddf6c5711f0
 def aluno(request):
     aluno_id = request.session.get('aluno_id')
     if not aluno_id:
@@ -278,6 +293,7 @@ def salvarcurso(request):
             )
             return redirect("home")
         except IntegrityError:
+<<<<<<< HEAD
             return HttpResponse("Erro: Curso com esse nome já existe.")
         
         
@@ -453,3 +469,6 @@ def detalhes_respostas(request, avaliacao_id, aluno_id):
         'respostas': respostas,
     }
     return render(request, 'DetalhesRespostasAluno.html', context)
+=======
+            return HttpResponse("Erro: Curso com esse nome já existe.")
+>>>>>>> c18069705a47b99e200c32f093958ddf6c5711f0
