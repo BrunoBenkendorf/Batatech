@@ -142,3 +142,24 @@ img {
 .card-conteudo h3 {
   margin-top: 0;
 }
+
+.aluno-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 12px;
+  border-radius: 20px;
+  background-color: transparent;
+  color: black;
+  font-family: 'Rajdhani', sans-serif;
+  font-weight: 500;
+}
+
+.icone-aluno {
+  font-size: 1.5rem;
+}
+
+.nome-aluno {
+  font-size: 1rem;
+  white-space: nowrap;
+}

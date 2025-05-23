@@ -34,37 +34,28 @@
                     </nav>
                     <div class="user-dropdown" id="userDropdown">
                         <div class="aluno-info" id="alunoinfo">
-<<<<<<< HEAD
-                            <div class="aluno-info" id="alunoinfo">
-                                <div class="icone-aluno">👨‍🎓</div>
-                                <span>{{ aluno.nome }}</span> <!-- mostra o nome real -->
-                                <i class="bi bi-caret-down-fill"></i>
-                              </div>
-                              <div class="dropdown-content" id="dropdownMenu">
-                                <a href="{% url 'perfil' %}">Perfil</a>
-                                <a href="{% url 'config' %}">Configurações</a>
-                                <a href="{% url 'logout' %}">Sair</a>
-=======
-                            <div class="icone-aluno">👨‍🎓</div>
-                            <span>{{ aluno.nome|default:"Aluno" }}</span>
-                            <i class="bi bi-caret-down-fill"></i>
+                          <div class="icone-aluno">👨‍🎓</div>
+                          <span>{{ aluno.nome }}</span><!-- mostra o nome real -->
+                          <i class="bi bi-caret-down-fill"></i>
                         </div>
                         <div class="dropdown-content" id="dropdownMenu">
-                            <a href="{% url 'perfil' %}">Perfil</a>
-                            <a href="{% url 'config' %}">Configurações</a>
-                            <a href="{% url 'logout' %}">Sair</a>
->>>>>>> c18069705a47b99e200c32f093958ddf6c5711f0
-                        </div>
-                    </div>
+                          <a href="../perfil">Perfil</a>
+                          <a href="{% url 'resultados_aluno' %}">Meus Resultados</a>
+                          <a href="../config">Configurações</a>
+                          <a href="{% url 'logout' %}">Sair</a>
+                        </div>  
+                    </div>                      
                 </div>
             </div>
         </div>
     </header>
 
     <main class="principal">
-        <ul>
-            <li><a href="{% url 'aluno' %}"><i class="bi bi-arrow-left-circle"></i></a></li>
-        </ul>
+        <div style="display: flex; justify-content: flex-start; padding: 0px 6px;">
+            <a href="{% url 'aluno' %}" class="btn btn-white" style="background-color: black; color: white; padding: 10px 30px;">
+              <i class="bi bi-arrow-left-circle-fill" style="margin-right: 8px;"></i>Voltar
+            </a>
+          </div>          
 
         <section class="sessao-curso">
             <h2>Curso: {{ curso.nome }}</h2>
@@ -107,7 +98,6 @@
 
             <!-- PROVAS -->
             <div id="provas" class="conteudo-aba">
-<<<<<<< HEAD
                 {% if avaliacoes %}
                 {% for avaliacao in avaliacoes %}
                 <div class="card-conteudo">
@@ -118,18 +108,6 @@
                 {% else %}
                 <p>Nenhuma prova disponível.</p>
                 {% endif %}
-=======
-                {% for arquivo in arquivos %}
-                {% if arquivo.tipo == "prova" %}
-                <div class="card-conteudo">
-                    <h3>{{ arquivo.descricao }}</h3>
-                    <a href="{{ arquivo.url_arquivo.url }}" target="_blank">Ver Prova</a>
-                </div>
-                {% endif %}
-                {% empty %}
-                <p>Nenhuma prova disponível.</p>
-                {% endfor %}
->>>>>>> c18069705a47b99e200c32f093958ddf6c5711f0
             </div>
         </section>
     </main>
@@ -157,11 +135,8 @@
     </footer>
 
     <script src="{% static 'js/curso.js' %}"></script>
-<<<<<<< HEAD
     <script src="{%static 'js/aluno.js'%}"></script>
     <script src="{%static 'js/menu.js'%}"></script>
-=======
->>>>>>> c18069705a47b99e200c32f093958ddf6c5711f0
     <script>
         function trocarAba(id) {
             document.querySelectorAll('.conteudo-aba').forEach(el => el.classList.remove('ativo'));
