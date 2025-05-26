@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Criar Fórum</title>
+  {% load static %}
+  <link rel="stylesheet" href="{% static 'curso.css' %}">
+</head>
+<body>
+
+<main class="principal">
+  <div>
+    <a href="{% url 'professor' %}" class="btn btn-white">Voltar</a>
+  </div>
+
+  <section class="sessao-curso">
+    <h2>Criar Fórum</h2>
+
+    <form method="post">
+      {% csrf_token %}
+
+      <div class="card-conteudo">
+        <label>Selecione o Curso:</label><br>
+        <select name="curso_id" required style="padding: 8px; width: 100%; border-radius: 8px;">
+          <option value="">Selecione...</option>
+          {% for curso in cursos %}
+            <option value="{{ curso.id_curso }}">{{ curso.nome }}</option>
+          {% endfor %}
+        </select>
+      </div>
+
+      <div class="card-conteudo">
+        <label>Título do Fórum:</label><br>
+        <input type="text" name="titulo" required style="width: 100%; padding: 8px; border-radius: 8px;">
+      </div>
+
+      <div class="card-conteudo">
+        <label>Descrição:</label><br>
+        <textarea name="descricao" rows="4" required style="width: 100%; padding: 8px; border-radius: 8px;"></textarea>
+      </div>
+
+      <button type="submit" class="btn btn-white">Criar Fórum</button>
+    </form>
+  </section>
+</main>
+
+</body>
+</html>

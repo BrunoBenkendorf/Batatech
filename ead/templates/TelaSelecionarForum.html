@@ -1,0 +1,92 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Selecionar Curso</title>
+    <link rel="stylesheet" href="{% static 'curso.css' %}">
+      <link rel="stylesheet" href="{% static 'cabecalho.css' %}">
+  <link rel="stylesheet" href="{% static 'rodape.css' %}">
+</head>
+
+<body>
+      <script src="{% static 'js/configglobal.js' %}"></script>
+    <header id="efeito">
+        <div class="container">
+            <div class="flex">
+                <a href="../home">
+                    <h1>BataTECH</h1>
+                </a>
+
+                <div class="pesquisa-container">
+                    <input type="text" class="pesquisa-txt" placeholder="Pesquisar...">
+                    <a href="#" class="pesquisa-btn">
+                        <i class="bi bi-search"></i>
+                    </a>
+                </div>
+
+                <div class="acoes-header">
+                    <nav>
+                        <ul>
+                            <li><a href="../faleconosco"><i class="bi bi-headset"></i></a></li>
+                        </ul>
+                    </nav>
+                    <div class="user-dropdown" id="userDropdown">
+                        <div class="user-info-prof" id="userInfo">
+                            <div class="user-icon-prof">👤</div>
+                            <span>{{ professor.nome }}</span>
+                            <i class="bi bi-caret-down-fill"></i>
+                        </div>
+                        <div class="dropdown-content" id="dropdownMenu">
+                            <a href="../perfil">Perfil</a>
+                            <a href="{% url 'resultados_professor' %}">Resultados das Provas</a>
+                            <a href="../config">Configurações</a>
+                            <a href="{% url 'logout' %}">Sair</a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+    </header>
+    <main class="principal">
+        <div style="display: flex; justify-content: flex-start; padding: 0px 6px;">
+            <a href="{% url 'professor' %}" class="btn btn-white"
+                style="background-color: black; color: white; padding: 10px 30px;">
+                <i class="bi bi-arrow-left-circle-fill" style="margin-right: 8px;"></i>Voltar
+            </a>
+        </div>
+        <section class="sessao-curso">
+            <h2>Selecione um Curso para ver os Fóruns</h2>
+            {% for curso in cursos %}
+            <div class="card-conteudo">
+                <h3>{{ curso.nome }}</h3>
+                <a href="{% url 'listar_foruns' curso.id_curso %}" class="btn btn-white">Ver Fóruns</a>
+            </div>
+            {% endfor %}
+        </section>
+    </main>
+    <footer class="footer">
+        <div class="footer-top">
+            <div class="footer-logo-block">
+                <h2 class="footer-text">BataTECH</h2>
+                <div class="social-icons"></div>
+            </div>
+        </div>
+        <hr>
+        <div class="footer-bottom">
+            <p>Copyright ©2025 BataTECH - Todos os direitos reservados</p>
+            <div class="footer-links">
+                <a href="{% url 'faleconosco' %}">Central de Ajuda</a>
+                <span class="dot">•</span>
+                <a href="{% url 'contato' %}">Contato</a>
+                <span class="dot">•</span>
+                <a href="{% url 'termo' %}">Termos de uso</a>
+                <span class="dot">•</span>
+                <a href="{% url 'privacidade' %}">Política de privacidade</a>
+            </div>
+        </div>
+    </footer>
+</body>
+
+</html>

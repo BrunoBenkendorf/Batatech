@@ -182,3 +182,29 @@ class RespostaAluno(models.Model):
 
     class Meta:
         db_table = 'resposta_aluno'
+class Forum(models.Model):
+    id_forum = models.AutoField(primary_key=True)
+    curso = models.ForeignKey(Curso, on_delete=models.CASCADE)
+    titulo = models.CharField(max_length=100)
+    descricao = models.TextField()
+
+    def __str__(self):
+        return self.titulo
+
+    class Meta:
+        db_table = 'forum'
+
+
+class Postagem(models.Model):
+    id_postagem = models.AutoField(primary_key=True)
+    forum = models.ForeignKey(Forum, on_delete=models.CASCADE)
+    autor_aluno = models.ForeignKey(Aluno, on_delete=models.CASCADE, blank=True, null=True)
+    autor_professor = models.ForeignKey(Professor, on_delete=models.CASCADE, blank=True, null=True)
+    conteudo = models.TextField()
+    data_postagem = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.autor_aluno or self.autor_professor} - {self.conteudo[:30]}"
+
+    class Meta:
+        db_table = 'postagem'

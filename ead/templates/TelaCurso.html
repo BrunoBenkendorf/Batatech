@@ -34,17 +34,17 @@
                     </nav>
                     <div class="user-dropdown" id="userDropdown">
                         <div class="aluno-info" id="alunoinfo">
-                          <div class="icone-aluno">👨‍🎓</div>
-                          <span>{{ aluno.nome }}</span><!-- mostra o nome real -->
-                          <i class="bi bi-caret-down-fill"></i>
+                            <div class="icone-aluno">👨‍🎓</div>
+                            <span>{{ aluno.nome }}</span><!-- mostra o nome real -->
+                            <i class="bi bi-caret-down-fill"></i>
                         </div>
                         <div class="dropdown-content" id="dropdownMenu">
-                          <a href="../perfil">Perfil</a>
-                          <a href="{% url 'resultados_aluno' %}">Meus Resultados</a>
-                          <a href="../config">Configurações</a>
-                          <a href="{% url 'logout' %}">Sair</a>
-                        </div>  
-                    </div>                      
+                            <a href="../perfil">Perfil</a>
+                            <a href="{% url 'resultados_aluno' %}">Meus Resultados</a>
+                            <a href="../config">Configurações</a>
+                            <a href="{% url 'logout' %}">Sair</a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -52,10 +52,11 @@
 
     <main class="principal">
         <div style="display: flex; justify-content: flex-start; padding: 0px 6px;">
-            <a href="{% url 'aluno' %}" class="btn btn-white" style="background-color: black; color: white; padding: 10px 30px;">
-              <i class="bi bi-arrow-left-circle-fill" style="margin-right: 8px;"></i>Voltar
+            <a href="{% url 'aluno' %}" class="btn btn-white"
+                style="background-color: black; color: white; padding: 10px 30px;">
+                <i class="bi bi-arrow-left-circle-fill" style="margin-right: 8px;"></i>Voltar
             </a>
-          </div>          
+        </div>
 
         <section class="sessao-curso">
             <h2>Curso: {{ curso.nome }}</h2>
@@ -64,6 +65,7 @@
                 <button class="aba ativo" onclick="trocarAba('atividades')">Atividades</button>
                 <button class="aba" onclick="trocarAba('biblioteca')">Biblioteca</button>
                 <button class="aba" onclick="trocarAba('provas')">Provas</button>
+                <button class="aba" onclick="trocarAba('foruns')">Fóruns</button>
             </div>
 
             <!-- ATIVIDADES -->
@@ -107,6 +109,14 @@
                 {% endfor %}
                 {% else %}
                 <p>Nenhuma prova disponível.</p>
+                {% endif %}
+            </div>
+            <!-- FORUNS -->
+            <div id="foruns" class="conteudo-aba">
+                {% if curso %}
+                <a href="{% url 'listar_foruns' curso.id_curso %}" class="btn btn-white">Acessar Fóruns do Curso</a>
+                {% else %}
+                <p>Fóruns indisponíveis.</p>
                 {% endif %}
             </div>
         </section>

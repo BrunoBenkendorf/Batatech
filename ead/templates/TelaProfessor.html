@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 
@@ -5,30 +6,28 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>BataTECH Cursos EAD</title>
-  {%load static%}
-  <link rel="stylesheet" href="{%static 'prof.css'%}">
-  <link rel="stylesheet" href="{%static 'cabecalho.css'%}">
-  <link rel="stylesheet" href="{%static 'rodape.css'%}">
+  {% load static %}
+  <link rel="stylesheet" href="{% static 'prof.css' %}">
+  <link rel="stylesheet" href="{% static 'cabecalho.css' %}">
+  <link rel="stylesheet" href="{% static 'rodape.css' %}">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
   <link rel="icon" type="image/png" href="{% static 'imagens/favicon.png' %}">
 </head>
 
 <body>
-  <script src="{%static 'js/configglobal.js'%}"></script>
+  <script src="{% static 'js/configglobal.js' %}"></script>
   <header id="efeito">
     <div class="container">
       <div class="flex">
         <a href="../home">
           <h1>BataTECH</h1>
         </a>
-
         <div class="pesquisa-container">
           <input type="text" class="pesquisa-txt" placeholder="Pesquisar...">
           <a href="#" class="pesquisa-btn">
             <i class="bi bi-search"></i>
           </a>
         </div>
-
         <div class="acoes-header">
           <nav>
             <ul>
@@ -41,30 +40,29 @@
               <span>{{ professor.nome }}</span>
               <i class="bi bi-caret-down-fill"></i>
             </div>
-              <div class="dropdown-content" id="dropdownMenu">
-                <a href="../perfil">Perfil</a>
-                <a href="{% url 'resultados_professor' %}">Resultados das Provas</a>
-                <a href="../config">Configurações</a>
-                <a href="{% url 'logout' %}">Sair</a>
-              </div>
+            <div class="dropdown-content" id="dropdownMenu">
+              <a href="../perfil">Perfil</a>
+              <a href="{% url 'resultados_professor' %}">Resultados das Provas</a>
+              <a href="../config">Configurações</a>
+              <a href="{% url 'logout' %}">Sair</a>
+            </div>
           </div>
-
         </div>
       </div>
+    </div>
   </header>
 
   <main class="main-content">
-    <br>
-    <br>
-    <br>
-    <br>
+    <br><br><br><br>
+
     <section class="course-section">
       <h2>Gerenciar Cursos:</h2>
       <img src="{% static 'imagens/notebook.jpg.png' %}" alt="Gerenciar Cursos">
+      <div class="text-box">
+        <a href="../seleciona" class="btn btn-white btn-animate">Gerenciar</a>
+      </div>
     </section>
-    <div class="text-box">
-      <a href="../seleciona" class="btn btn-white btn-animate">Gerenciar</a>
-    </div>
+
     <section class="course-section">
       <h2>Criar Cursos:</h2>
       <img src="{% static 'imagens/Telas.jpg.png' %}" alt="Criar Cursos">
@@ -72,33 +70,40 @@
         <a href="../cadcurso" class="btn btn-white btn-animate">Criar</a>
       </div>
     </section>
+
+    <section class="course-section">
+      <h2>Fóruns dos Cursos:</h2>
+      <img src="{% static 'imagens/forum.png' %}" alt="Fóruns dos Cursos">
+      <div class="text-box">
+        <a href="{% url 'seleciona_forum' %}" class="btn btn-white btn-animate">Fóruns dos Cursos</a>
+      </div>
+    </section>
   </main>
 
+  <footer class="footer">
+    <div class="footer-top">
+      <div class="footer-logo-block">
+        <h2 class="footer-text">BataTECH</h2>
+        <div class="social-icons"></div>
+      </div>
+    </div>
+    <hr>
+    <div class="footer-bottom">
+      <p>Copyright ©2025 BataTECH - Todos os direitos reservados</p>
+      <div class="footer-links">
+        <a href="{% url 'faleconosco' %}">Central de Ajuda</a>
+        <span class="dot">•</span>
+        <a href="{% url 'contato' %}">Contato</a>
+        <span class="dot">•</span>
+        <a href="{% url 'termo' %}">Termos de uso</a>
+        <span class="dot">•</span>
+        <a href="{% url 'privacidade' %}">Política de privacidade</a>
+      </div>
+    </div>
+  </footer>
 
+  <script src="{% static 'js/prof.js' %}"></script>
+  <script src="{% static 'js/menu.js' %}"></script>
 </body>
-<footer class="footer">
-  <div class="footer-top">
-    <div class="footer-logo-block">
-      <h2 class="footer-text">BataTECH</h2>
-      <div class="social-icons"></div>
-    </div>
-  </div>
-  <hr>
-  <div class="footer-bottom">
-    <p>Copyright ©2025 BataTECH - Todos os direitos reservados</p>
-    <div class="footer-links">
-      <a href="{% url 'faleconosco' %}">Central de Ajuda</a>
-      <span class="dot">•</span>
-      <a href="{% url 'contato' %}">Contato</a>
-      <span class="dot">•</span>
-      <a href="{% url 'termo' %}">Termos de uso</a>
-      <span class="dot">•</span>
-      <a href="{% url 'privacidade' %}">Política de privacidade</a>
-    </div>
-  </div>
-</footer>
-
-<script src="{%static 'js/prof.js'%}"></script>
-<script src="{%static 'js/menu.js'%}"></script>
 
 </html>

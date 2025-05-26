@@ -1,20 +1,20 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Aluno, Professor, MensagemContato, Curso, Matricula, Arquivo, Modulo, Aula,Avaliacao, Questao, QuestaoHasAvaliacao,RespostaAluno
-from .models import Aluno, Professor, MensagemContato, Curso, Matricula, Arquivo, Modulo, Aula
+from .models import Aluno, Professor, MensagemContato, Curso, Matricula, Arquivo, Modulo, Aula,Avaliacao,Questao, QuestaoHasAvaliacao,RespostaAluno,Forum, Postagem
 from django.http import HttpResponse, JsonResponse
 from django.db import IntegrityError
-from django.views.decorators.csrf import csrf_exempt
 from datetime import date
 from django.contrib import messages
 
 
-@csrf_exempt
 def index(request):
     cursos = Curso.objects.all()
     aluno_id = request.session.get('aluno_id')
+    professor_id = request.session.get('professor_id')
+
     return render(request, 'TelaHome.html', {
         'cursos': cursos,
-        'aluno_logado': bool(aluno_id)
+        'aluno_logado': bool(aluno_id),
+        'professor_logado': bool(professor_id)
     })
 
 def login_usuario(request):
@@ -30,7 +30,7 @@ def login_usuario(request):
             try:
                 professor = Professor.objects.get(email=email, senha=senha)
                 request.session['professor_id'] = professor.id_professor
-                return redirect('professor')
+                return redirect('home')
             except Professor.DoesNotExist:
                 return render(request, "TelaLogin.html", {
                     "erro": "E-mail ou senha inválidos. Tente novamente."
@@ -52,7 +52,6 @@ def faleconosco(request):
             mensagem=mensagem
         )
         return redirect('home')
-        return HttpResponse("Mensagem enviada com sucesso!")
 
     return render(request, 'TelaFaleConosco.html')
 
@@ -95,10 +94,7 @@ def curso(request, id):
         'avaliacoes': avaliacoes
     })
 
-    return render(request, 'TelaCurso.html', {
-        'curso': curso_obj,
-        'arquivos': arquivos
-    })
+
 
 
 def aluno(request):
@@ -463,4 +459,63 @@ def detalhes_respostas(request, avaliacao_id, aluno_id):
         'respostas': respostas,
     }
     return render(request, 'DetalhesRespostasAluno.html', context)
+def criar_forum(request):
+    professor_id = request.session.get('professor_id')
+    if not professor_id:
+        return redirect('login')
 
+    cursos = Curso.objects.all()
+
+    if request.method == 'POST':
+        curso_id = request.POST.get('curso_id')
+        titulo = request.POST.get('titulo')
+        descricao = request.POST.get('descricao')
+
+        curso = get_object_or_404(Curso, id_curso=curso_id)
+
+        Forum.objects.create(
+            curso=curso,
+            titulo=titulo,
+            descricao=descricao
+        )
+        return redirect('professor')
+
+    return render(request, 'TelaCriarForum.html', {'cursos': cursos})
+def listar_foruns(request, curso_id):
+    curso = get_object_or_404(Curso, id_curso=curso_id)
+    foruns = Forum.objects.filter(curso=curso)
+
+    return render(request, 'TelaForuns.html', {
+        'curso': curso,
+        'foruns': foruns
+    })
+
+
+def visualizar_forum(request, forum_id):
+    forum = get_object_or_404(Forum, id_forum=forum_id)
+    postagens = Postagem.objects.filter(forum=forum).order_by('data_postagem')
+
+    if request.method == 'POST':
+        conteudo = request.POST.get('conteudo')
+
+        if 'aluno_id' in request.session:
+            aluno = get_object_or_404(Aluno, id_aluno=request.session['aluno_id'])
+            Postagem.objects.create(forum=forum, autor_aluno=aluno, conteudo=conteudo)
+        elif 'professor_id' in request.session:
+            professor = get_object_or_404(Professor, id_professor=request.session['professor_id'])
+            Postagem.objects.create(forum=forum, autor_professor=professor, conteudo=conteudo)
+
+        return redirect('visualizar_forum', forum_id=forum.id_forum)
+
+    return render(request, 'TelaForumDetalhe.html', {
+        'forum': forum,
+        'postagens': postagens
+    })
+def seleciona_forum(request):
+    professor_id = request.session.get('professor_id')
+    if not professor_id:
+        return redirect('login')
+
+    cursos = Curso.objects.all()  # Ou filtrar por cursos do professor, se desejar
+
+    return render(request, 'TelaSelecionarForum.html', {'cursos': cursos})

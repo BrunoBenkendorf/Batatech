@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="utf-8">
+    <title>
+        Foruns - {{ curso.nome }}
+    </title>
+    {% load static %}
+    <link href="{% static 'curso.css' %}" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'cabecalho.css' %}">
+    <link rel="stylesheet" href="{% static 'rodape.css' %}">
+</head>
+
+<body>
+    <script src="{% static 'js/configglobal.js' %}"></script>
+
+    <header id="efeito">
+        <div class="container">
+            <div class="flex">
+                <a href="{% url 'home' %}">
+                    <h1>BataTECH</h1>
+                </a>
+                <div class="pesquisa-container">
+                    <input type="text" class="pesquisa-txt" placeholder="Pesquisar cursos...">
+                    <a href="#" class="pesquisa-btn"><i class="bi bi-search"></i></a>
+                </div>
+                <div class="acoes-header">
+                    <nav>
+                        <ul>
+                            <li><a href="{% url 'faleconosco' %}"><i class="bi bi-headset"></i></a></li>
+                        </ul>
+                    </nav>
+                    <div class="user-dropdown" id="userDropdown">
+                        <div class="aluno-info" id="alunoinfo">
+                            <div class="icone-aluno">👨‍🎓</div>
+                            <span>{{ aluno.nome }}</span><!-- mostra o nome real -->
+                            <i class="bi bi-caret-down-fill"></i>
+                        </div>
+                        <div class="dropdown-content" id="dropdownMenu">
+                            <a href="../perfil">Perfil</a>
+                            <a href="{% url 'resultados_aluno' %}">Meus Resultados</a>
+                            <a href="../config">Configurações</a>
+                            <a href="{% url 'logout' %}">Sair</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <main class="principal">
+        <div style="display: flex; justify-content: flex-start; padding: 0px 6px;">
+            <a class="btn btn-white" href="{% url 'curso' curso.id_curso %}"
+                style="background-color: black; color: white; padding: 10px 30px;">
+                <i class="bi bi-arrow-left-circle-fill" style="margin-right: 8px;">
+                </i>
+                Voltar para o Curso
+            </a>
+        </div>
+        <section class="sessao-curso">
+            <h2>
+                Foruns do Curso: {{ curso.nome }}
+            </h2>
+            {% if foruns %}
+            {% for forum in foruns %}
+            <div class="card-conteudo">
+                <h3>
+                    {{ forum.titulo }}
+                </h3>
+                <p>
+                    {{ forum.descricao }}
+                </p>
+                <a class="btn btn-white" href="{% url 'visualizar_forum' forum.id_forum %}">
+                    Acessar Forum
+                </a>
+            </div>
+            {% endfor %}
+            {% else %}
+            <p>
+                Nenhum forum disponivel para este curso.
+            </p>
+            {% endif %}
+        </section>
+    </main>
+    <footer class="footer">
+        <div class="footer-top">
+            <div class="footer-logo-block">
+                <h2 class="footer-text">BataTECH</h2>
+                <div class="social-icons"></div>
+            </div>
+        </div>
+        <hr>
+        <div class="footer-bottom">
+            <p>Copyright ©2025 BataTECH - Todos os direitos reservados</p>
+            <div class="footer-links">
+                <a href="{% url 'faleconosco' %}">Central de Ajuda</a>
+                <span class="dot">•</span>
+                <a href="{% url 'contato' %}">Contato</a>
+                <span class="dot">•</span>
+                <a href="{% url 'termo' %}">Termos de uso</a>
+                <span class="dot">•</span>
+                <a href="{% url 'privacidade' %}">Política de privacidade</a>
+            </div>
+        </div>
+    </footer>
+</body>
+
+</html>
