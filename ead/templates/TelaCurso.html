@@ -23,8 +23,12 @@
                     <h1>BataTECH</h1>
                 </a>
                 <div class="pesquisa-container">
-                    <input type="text" class="pesquisa-txt" placeholder="Pesquisar cursos...">
-                    <a href="#" class="pesquisa-btn"><i class="bi bi-search"></i></a>
+                    <form action="{% url 'buscar_cursos' %}" method="get" class="pesquisa-container">
+                        <input type="text" name="q" class="pesquisa-txt" placeholder="Pesquisar cursos...">
+                        <button type="submit" class="pesquisa-btn">
+                            <i class="bi bi-search"></i>
+                        </button>
+                    </form>
                 </div>
                 <div class="acoes-header">
                     <nav>

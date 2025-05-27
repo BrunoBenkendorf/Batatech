@@ -18,7 +18,7 @@ class Aluno(models.Model):
     telefone = models.CharField(db_column='Telefone', max_length=15, blank=True, null=True)
     email = models.CharField(db_column='Email', max_length=45)
     cpf = models.CharField(db_column='CPF', unique=True, max_length=15)
-
+    foto_perfil = models.ImageField(upload_to='perfil/alunos/', blank=True, null=True)
     class Meta:
         db_table = 'aluno'
 
@@ -48,7 +48,7 @@ class Professor(models.Model):
     cpf = models.CharField(db_column='CPF', unique=True, max_length=15)
     experiencia = models.CharField(db_column='Experiencia', max_length=45)
     formacao = models.CharField(db_column='Formacao', max_length=20)
-
+    foto_perfil = models.ImageField(upload_to='perfil/professores/', blank=True, null=True)
     class Meta:
         db_table = 'professor'
 

@@ -6,12 +6,14 @@
     <meta charset="UTF-8">
     <title>Selecionar Curso</title>
     <link rel="stylesheet" href="{% static 'curso.css' %}">
-      <link rel="stylesheet" href="{% static 'cabecalho.css' %}">
-  <link rel="stylesheet" href="{% static 'rodape.css' %}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'cabecalho.css' %}">
+    <link rel="stylesheet" href="{% static 'rodape.css' %}">
+    <link rel="icon" href="{% static 'imagens/favicon.png' %}" type="image/png">
 </head>
 
 <body>
-      <script src="{% static 'js/configglobal.js' %}"></script>
+    <script src="{% static 'js/configglobal.js' %}"></script>
     <header id="efeito">
         <div class="container">
             <div class="flex">
@@ -51,9 +53,11 @@
     </header>
     <main class="principal">
         <div style="display: flex; justify-content: flex-start; padding: 0px 6px;">
-            <a href="{% url 'professor' %}" class="btn btn-white"
+            <a class="btn btn-white" href="javascript:history.back()"
                 style="background-color: black; color: white; padding: 10px 30px;">
-                <i class="bi bi-arrow-left-circle-fill" style="margin-right: 8px;"></i>Voltar
+                <i class="bi bi-arrow-left-circle-fill" style="margin-right: 8px;">
+                </i>
+                Voltar
             </a>
         </div>
         <section class="sessao-curso">

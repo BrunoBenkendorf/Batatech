@@ -22,7 +22,8 @@
     </div>
 
     <!-- Formulário começa aqui -->
-    <form id="cadastroForm" class="space-y-4" method="POST" action="{% url 'realizar_cadastro' %}">
+    <form id="cadastroForm" class="space-y-4" method="POST" action="{% url 'realizar_cadastro' %}"
+      enctype="multipart/form-data">
       {% csrf_token %}
 
       <!-- Escolha do Perfil -->
@@ -52,7 +53,15 @@
         class="w-full border rounded px-3 py-2" />
       <input type="text" name="cpf" id="cpf" placeholder="CPF" required class="w-full border rounded px-3 py-2" />
 
-      <!-- Senha -->
+      <!-- Upload de Foto -->
+      <label class="block">
+        <span class="text-sm text-gray-700">Foto de Perfil (opcional)</span>
+        <input type="file" name="foto_perfil" accept="image/*" class="block w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 
+    file:rounded-full file:border-0 file:text-sm file:font-semibold 
+    file:bg-orange-50 file:text-orange-700 hover:file:bg-orange-100" />
+      </label>
+
+      <!-- Senhas -->
       <div class="relative">
         <input type="password" name="senha" id="senha" placeholder="Senha (mínimo 6 caracteres)" required
           class="w-full border rounded px-3 py-2 pr-10" />
@@ -67,7 +76,7 @@
           id="toggleConfirmaSenha" onclick="toggleSenha('confirmaSenha', 'toggleConfirmaSenha')"></i>
       </div>
 
-      <!-- Campos adicionais para Professor -->
+      <!-- Campos para Professor -->
       <div id="camposProfessor" class="space-y-4 hidden">
         <input type="text" name="formacao" id="formacao" placeholder="Formação Acadêmica"
           class="w-full border rounded px-3 py-2" />

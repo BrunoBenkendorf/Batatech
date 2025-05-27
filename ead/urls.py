@@ -35,5 +35,6 @@ urlpatterns = [
     path('criar_forum/', views.criar_forum, name='criar_forum'),
     path('curso/<int:curso_id>/foruns/', views.listar_foruns, name='listar_foruns'),
     path('seleciona_forum/', views.seleciona_forum, name='seleciona_forum'),
-    path('forum/<int:forum_id>/', views.visualizar_forum, name='visualizar_forum')
+    path('forum/<int:forum_id>/', views.visualizar_forum, name='visualizar_forum'),
+    path('buscar/', views.buscar_cursos, name='buscar_cursos')
 ]

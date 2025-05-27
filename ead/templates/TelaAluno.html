@@ -7,6 +7,7 @@
   <title>BataTECH Cursos EAD</title>
   {%load static%}
   <link rel="stylesheet" href="{%static 'aluno.css'%}">
+  <link rel="stylesheet" href="{% static 'perfil.css' %}">
   <link rel="stylesheet" href="{%static 'cabecalho.css'%}">
   <link rel="stylesheet" href="{%static 'rodape.css'%}">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
@@ -23,10 +24,12 @@
         </a>
 
         <div class="pesquisa-container">
-          <input type="text" class="pesquisa-txt" placeholder="Pesquisar cursos...">
-          <a href="#" class="pesquisa-btn">
-            <i class="bi bi-search"></i>
-          </a>
+          <form action="{% url 'buscar_cursos' %}" method="get" class="pesquisa-container">
+            <input type="text" name="q" class="pesquisa-txt" placeholder="Pesquisar cursos...">
+            <button type="submit" class="pesquisa-btn">
+              <i class="bi bi-search"></i>
+            </button>
+          </form>
         </div>
 
         <div class="acoes-header">
@@ -37,7 +40,13 @@
           </nav>
           <div class="user-dropdown" id="userDropdown">
             <div class="aluno-info" id="alunoinfo">
-              <div class="icone-aluno">👨‍🎓</div>
+              <div class="icone-aluno">
+                {% if aluno.foto_perfil %}
+                  <img src="{{ aluno.foto_perfil.url }}" alt="Foto de Perfil" class="w-10 h-10 rounded-full object-cover">
+                {% else %}
+                👤
+                {% endif %}
+              </div>
               <span>{{ aluno.nome }}</span> <!-- mostra o nome real -->
               <i class="bi bi-caret-down-fill"></i>
             </div>

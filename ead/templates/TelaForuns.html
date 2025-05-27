@@ -11,6 +11,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
     <link rel="stylesheet" href="{% static 'cabecalho.css' %}">
     <link rel="stylesheet" href="{% static 'rodape.css' %}">
+    <link rel="icon" href="{% static 'imagens/favicon.png' %}" type="image/png">
 </head>
 
 <body>
@@ -51,11 +52,11 @@
     </header>
     <main class="principal">
         <div style="display: flex; justify-content: flex-start; padding: 0px 6px;">
-            <a class="btn btn-white" href="{% url 'curso' curso.id_curso %}"
+            <a class="btn btn-white" href="javascript:history.back()"
                 style="background-color: black; color: white; padding: 10px 30px;">
                 <i class="bi bi-arrow-left-circle-fill" style="margin-right: 8px;">
                 </i>
-                Voltar para o Curso
+                Voltar
             </a>
         </div>
         <section class="sessao-curso">

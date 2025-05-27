@@ -4,7 +4,7 @@ from django.http import HttpResponse, JsonResponse
 from django.db import IntegrityError
 from datetime import date
 from django.contrib import messages
-
+from django.db.models import Q
 
 def index(request):
     cursos = Curso.objects.all()
@@ -152,7 +152,7 @@ def realizar_cadastro(request):
         telefone = request.POST.get("telefone")
         cpf = request.POST.get("cpf")
         senha = request.POST.get("senha")
-
+        foto_perfil = request.FILES.get("foto_perfil")
         nome_completo = f"{nome} {sobrenome}"
 
         if Aluno.objects.filter(email=email).exists() or Professor.objects.filter(email=email).exists():
@@ -165,7 +165,8 @@ def realizar_cadastro(request):
                     email=email,
                     telefone=telefone,
                     cpf=cpf,
-                    senha=senha
+                    senha=senha,
+                    foto_perfil=foto_perfil
                 )
             elif perfil == "professor":
                 formacao = request.POST.get("formacao")
@@ -178,7 +179,8 @@ def realizar_cadastro(request):
                     cpf=cpf,
                     senha=senha,
                     formacao=formacao,
-                    experiencia=experiencia
+                    experiencia=experiencia,
+                    foto_perfil=foto_perfil
                 )
             return redirect("login")
         except IntegrityError:
@@ -519,3 +521,75 @@ def seleciona_forum(request):
     cursos = Curso.objects.all()  # Ou filtrar por cursos do professor, se desejar
 
     return render(request, 'TelaSelecionarForum.html', {'cursos': cursos})
+def perfil(request):
+    aluno_id = request.session.get('aluno_id')
+    professor_id = request.session.get('professor_id')
+
+    usuario = None
+    perfil_tipo = None
+
+    if aluno_id:
+        usuario = get_object_or_404(Aluno, id_aluno=aluno_id)
+        perfil_tipo = 'aluno'
+    elif professor_id:
+        usuario = get_object_or_404(Professor, id_professor=professor_id)
+        perfil_tipo = 'professor'
+    else:
+        return redirect('login')
+
+    if request.method == 'POST':
+        nome = request.POST.get('nome')
+        sobrenome = request.POST.get('sobrenome')
+        email = request.POST.get('email')
+        telefone = request.POST.get('telefone')
+        senha = request.POST.get('senha')
+        foto_perfil = request.FILES.get('foto_perfil')
+
+        if nome and sobrenome:
+            usuario.nome = f"{nome} {sobrenome}"
+        if email:
+            usuario.email = email
+        if telefone:
+            usuario.telefone = telefone
+        if senha:
+            usuario.senha = senha
+        if foto_perfil:
+            usuario.foto_perfil = foto_perfil
+
+        if perfil_tipo == 'professor':
+            formacao = request.POST.get('formacao')
+            experiencia = request.POST.get('experiencia')
+            if formacao:
+                usuario.formacao = formacao
+            if experiencia:
+                usuario.experiencia = experiencia
+
+        usuario.save()
+        return redirect('home')
+
+    nome_partes = usuario.nome.split(' ', 1)
+    nome = nome_partes[0]
+    sobrenome = nome_partes[1] if len(nome_partes) > 1 else ''
+
+    context = {
+        'usuario': usuario,
+        'perfil_tipo': perfil_tipo,
+        'nome': nome,
+        'sobrenome': sobrenome,
+    }
+    return render(request, 'TelaPerfil.html', context)
+def buscar_cursos(request):
+    termo = request.GET.get('q', '')
+    cursos = Curso.objects.filter(
+        Q(nome__icontains=termo) | Q(descricao__icontains=termo)
+    )
+
+    aluno_id = request.session.get('aluno_id')
+    professor_id = request.session.get('professor_id')
+
+    return render(request, 'TelaResultadosBusca.html', {
+        'cursos': cursos,
+        'termo': termo,
+        'aluno_logado': bool(aluno_id),
+        'professor_logado': bool(professor_id)
+    })
