@@ -1,43 +1,42 @@
-# BataTECH - Plataforma de Cursos EAD
+BataTECH - Plataforma de Cursos EAD
+Este é o repositório do projeto Batatech, uma plataforma de cursos online em desenvolvimento.
 
-## Descrição do Projeto
-
+Descrição do Projeto
 BataTECH é uma plataforma de cursos online em desenvolvimento, projetada para facilitar o aprendizado de alunos e a gestão de cursos por professores. Este projeto é parte do curso de desenvolvimento de sistemas do 3º semestre e visa proporcionar uma experiência de aprendizado interativa e acessível.
 
----
-
-## Status do Projeto
-
-**Em Desenvolvimento:**  
+Status do Projeto
+Em Desenvolvimento:
 O projeto ainda está em fase de desenvolvimento. Funcionalidades estão sendo implementadas e testadas.
 
----
+Funcionalidades Planejadas
+Cadastro de Alunos e Professores: Permitir que novos usuários se cadastrem na plataforma.
 
-## Funcionalidades Planejadas
+Login e Logout: Usuários poderão fazer login e logout de suas contas.
 
-- **Cadastro de Alunos e Professores:** Permitir que novos usuários se cadastrem na plataforma.
-- **Login e Logout:** Usuários poderão fazer login e logout de suas contas.
-- **Gerenciamento de Cursos:** Professores poderão criar, editar e gerenciar cursos.
-- **Acesso a Materiais:** Alunos poderão acessar materiais de cursos, como PDFs, vídeos e atividades.
-- **Avaliações:** Professores poderão criar avaliações e os alunos poderão responder a elas.
-- **Resultados:** Alunos poderão visualizar seus resultados de avaliações.
-- **Configurações de Conta:** Usuários poderão alterar suas configurações de conta, como tema e notificações.
+Gerenciamento de Cursos: Professores poderão criar, editar e gerenciar cursos.
 
----
+Acesso a Materiais: Alunos poderão acessar materiais de cursos, como PDFs, vídeos e atividades.
 
-## Tecnologias Utilizadas
+Avaliações: Professores poderão criar avaliações e os alunos poderão responder a elas.
 
-- **Django:** Framework web utilizado para o desenvolvimento do backend.
-- **HTML/CSS:** Linguagens de marcação e estilo para a construção das interfaces.
-- **JavaScript:** Para interatividade nas páginas.
-- **Bootstrap:** Framework CSS para design responsivo.
-- **Tailwind CSS:** Utilizado para estilização moderna e flexível.
+Resultados: Alunos poderão visualizar seus resultados de avaliações.
 
----
+Configurações de Conta: Usuários poderão alterar suas configurações de conta, como tema e notificações.
 
-## Estrutura do Projeto
+Sistemas de Administração: Funcionalidades para gerenciar usuários, cursos e conteúdos da plataforma.
 
-```
+Tecnologias Utilizadas
+Django: Framework web utilizado para o desenvolvimento do backend.
+
+HTML/CSS: Linguagens de marcação e estilo para a construção das interfaces.
+
+JavaScript: Para interatividade nas páginas.
+
+Bootstrap: Framework CSS para design responsivo.
+
+Tailwind CSS: Utilizado para estilização moderna e flexível.
+
+Estrutura do Projeto
 /plataforma_ead
 │
 ├── /ead                  # Aplicação principal
@@ -52,34 +51,40 @@ O projeto ainda está em fase de desenvolvimento. Funcionalidades estão sendo i
 ├── manage.py             # Script de gerenciamento do Django
 ├── settings.py           # Configurações do projeto
 └── urls.py               # Rotas do projeto
-```
 
----
+Como Executar o Projeto
+Clone este repositório:
 
-## Como Executar o Projeto
+git clone https://github.com/BrunoBenkendorf/Batatech.git
 
-1. Clone este repositório.
-2. Crie e ative um ambiente virtual Python.
-3. Instale as dependências com:
-   ```
-   pip install -r requirements.txt
-   ```
-4. Aplique as migrações:
-   ```
-   python manage.py migrate
-   ```
-5. Execute o servidor local:
-   ```
-   python manage.py runserver
-   ```
-6. Acesse `http://127.0.0.1:8000` no navegador para usar a plataforma.
+Navegue até o diretório do projeto:
 
----
+cd Batatech
 
-## Contato
+Crie e ative um ambiente virtual Python:
 
+python -m venv venv
+# No Windows
+.\venv\Scripts\activate
+# No macOS/Linux
+source venv/bin/activate
+
+Instale as dependências com:
+
+pip install -r requirements.txt
+
+Aplique as migrações:
+
+python manage.py migrate
+
+Execute o servidor local:
+
+python manage.py runserver
+
+Acesse http://127.0.0.1:8000 no navegador para usar a plataforma.
+
+Contato
 Para dúvidas, sugestões ou contribuições, entre em contato pelo email: brunobenkendorf11@gmail.com
 
----
-
-*Projeto desenvolvido para fins acadêmicos - 3º semestre*
+Licença
+Projeto desenvolvido para fins acadêmicos - 3º semestre.
