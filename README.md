@@ -18,8 +18,8 @@ Funcionalidades estão sendo implementadas e testadas continuamente.
 - 🧑‍🏫 Gerenciamento de cursos pelos professores  
 - 📂 Acesso a materiais (PDFs, vídeos, atividades)  
 - 📝 Criação e resolução de avaliações  
-- 📊 Visualização de resultados pelos alunos  
-- ⚙️ Configurações de conta (tema, notificações etc.)  
+- 📊 Visualização de resultados pelos alunos e professores 
+- ⚙️ Configurações de conta
 - 🛠️ Painel administrativo para gerenciar usuários, cursos e conteúdos
 
 ## 🛠️ Tecnologias Utilizadas
