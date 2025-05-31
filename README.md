@@ -1,42 +1,38 @@
-BataTECH - Plataforma de Cursos EAD
-Este é o repositório do projeto Batatech, uma plataforma de cursos online em desenvolvimento.
+# 🎓 BataTECH - Plataforma de Cursos EAD
 
-Descrição do Projeto
-BataTECH é uma plataforma de cursos online em desenvolvimento, projetada para facilitar o aprendizado de alunos e a gestão de cursos por professores. Este projeto é parte do curso de desenvolvimento de sistemas do 3º semestre e visa proporcionar uma experiência de aprendizado interativa e acessível.
+Este é o repositório do projeto **BataTECH**, uma plataforma de cursos online em desenvolvimento.
 
-Status do Projeto
-Em Desenvolvimento:
-O projeto ainda está em fase de desenvolvimento. Funcionalidades estão sendo implementadas e testadas.
+## 📘 Descrição do Projeto
 
-Funcionalidades Planejadas
-Cadastro de Alunos e Professores: Permitir que novos usuários se cadastrem na plataforma.
+**BataTECH** é uma plataforma de ensino a distância (EAD) desenvolvida para facilitar o aprendizado de alunos e a gestão de cursos por professores. Este projeto integra o curso de **Desenvolvimento de Sistemas (3º semestre)** e busca oferecer uma experiência de aprendizado **interativa**, **moderna** e **acessível**.
 
-Login e Logout: Usuários poderão fazer login e logout de suas contas.
+## 🚧 Status do Projeto
 
-Gerenciamento de Cursos: Professores poderão criar, editar e gerenciar cursos.
+**Em desenvolvimento**  
+Funcionalidades estão sendo implementadas e testadas continuamente.
 
-Acesso a Materiais: Alunos poderão acessar materiais de cursos, como PDFs, vídeos e atividades.
+## ✅ Funcionalidades Planejadas
 
-Avaliações: Professores poderão criar avaliações e os alunos poderão responder a elas.
+- 📌 Cadastro de alunos e professores  
+- 🔐 Login e logout de usuários  
+- 🧑‍🏫 Gerenciamento de cursos pelos professores  
+- 📂 Acesso a materiais (PDFs, vídeos, atividades)  
+- 📝 Criação e resolução de avaliações  
+- 📊 Visualização de resultados pelos alunos  
+- ⚙️ Configurações de conta (tema, notificações etc.)  
+- 🛠️ Painel administrativo para gerenciar usuários, cursos e conteúdos
 
-Resultados: Alunos poderão visualizar seus resultados de avaliações.
+## 🛠️ Tecnologias Utilizadas
 
-Configurações de Conta: Usuários poderão alterar suas configurações de conta, como tema e notificações.
+- **Django** – Backend da aplicação  
+- **HTML/CSS** – Estrutura e estilo das páginas  
+- **JavaScript** – Funcionalidades interativas  
+- **Bootstrap** – Layout responsivo com componentes prontos  
+- **Tailwind CSS** – Estilização moderna e personalizada
 
-Sistemas de Administração: Funcionalidades para gerenciar usuários, cursos e conteúdos da plataforma.
+## 📁 Estrutura do Projeto
 
-Tecnologias Utilizadas
-Django: Framework web utilizado para o desenvolvimento do backend.
-
-HTML/CSS: Linguagens de marcação e estilo para a construção das interfaces.
-
-JavaScript: Para interatividade nas páginas.
-
-Bootstrap: Framework CSS para design responsivo.
-
-Tailwind CSS: Utilizado para estilização moderna e flexível.
-
-Estrutura do Projeto
+```
 /plataforma_ead
 │
 ├── /ead                  # Aplicação principal
@@ -50,41 +46,71 @@ Estrutura do Projeto
 │
 ├── manage.py             # Script de gerenciamento do Django
 ├── settings.py           # Configurações do projeto
-└── urls.py               # Rotas do projeto
+└── urls.py               # Rotas principais do projeto
+```
 
-Como Executar o Projeto
-Clone este repositório:
+## ▶️ Como Executar o Projeto
 
-git clone https://github.com/BrunoBenkendorf/Batatech.git
+1. **Clone o repositório:**
 
-Navegue até o diretório do projeto:
+   ```bash
+   git clone https://github.com/BrunoBenkendorf/Batatech.git
+   ```
 
-cd Batatech
+2. **Acesse o diretório do projeto:**
 
-Crie e ative um ambiente virtual Python:
+   ```bash
+   cd Batatech
+   ```
 
-python -m venv venv
-# No Windows
-.\venv\Scripts\activate
-# No macOS/Linux
-source venv/bin/activate
+3. **Crie e ative um ambiente virtual Python:**
 
-Instale as dependências com:
+   ```bash
+   python -m venv venv
+   ```
 
-pip install -r requirements.txt
+   - No Windows:
 
-Aplique as migrações:
+     ```bash
+     .\venv\Scripts\activate
+     ```
 
-python manage.py migrate
+   - No macOS/Linux:
 
-Execute o servidor local:
+     ```bash
+     source venv/bin/activate
+     ```
 
-python manage.py runserver
+4. **Instale as dependências:**
 
-Acesse http://127.0.0.1:8000 no navegador para usar a plataforma.
+   ```bash
+   pip install -r requirements.txt
+   ```
 
-Contato
-Para dúvidas, sugestões ou contribuições, entre em contato pelo email: brunobenkendorf11@gmail.com
+5. **Aplique as migrações:**
 
-Licença
-Projeto desenvolvido para fins acadêmicos - 3º semestre.
+   ```bash
+   python manage.py migrate
+   ```
+
+6. **Execute o servidor local:**
+
+   ```bash
+   python manage.py runserver
+   ```
+
+7. **Acesse a aplicação:**
+
+   Abra o navegador e vá para:  
+   [http://127.0.0.1:8000](http://127.0.0.1:8000)
+
+---
+
+## 📬 Contato
+
+Para dúvidas, sugestões ou contribuições, entre em contato:  
+📧 brunobenkendorf11@gmail.com
+
+## 📄 Licença
+
+Projeto desenvolvido para fins acadêmicos – 3º semestre do curso de Desenvolvimento de Sistemas.
