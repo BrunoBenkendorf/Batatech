@@ -55,8 +55,6 @@ urlpatterns = [
     path('admin/mensagens/', views.listar_mensagens_contato, name='listar_mensagens_contato'),
     path('inativar_aluno/<int:aluno_id>/', views.inativar_aluno, name='inativar_aluno'),
     path('ativar_aluno/<int:aluno_id>/', views.ativar_aluno, name='ativar_aluno'),
-
-    # URLs para gerenciar status de Professores
     path('inativar_professor/<int:professor_id>/', views.inativar_professor, name='inativar_professor'),
     path('ativar_professor/<int:professor_id>/', views.ativar_professor, name='ativar_professor'),
 ]
