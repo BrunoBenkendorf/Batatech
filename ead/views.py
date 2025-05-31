@@ -13,11 +13,13 @@ def index(request):
     cursos = Curso.objects.all()
     aluno_id = request.session.get('aluno_id')
     professor_id = request.session.get('professor_id')
+    admin_id = request.session.get('admin_id')
 
     return render(request, 'TelaHome.html', {
         'cursos': cursos,
         'aluno_logado': bool(aluno_id),
-        'professor_logado': bool(professor_id)
+        'professor_logado': bool(professor_id),
+        'admin_logado': bool(admin_id)
     })
 #Login Logout
 def login_usuario(request):
@@ -809,6 +811,12 @@ def deletar_curso(request, curso_id):
         return redirect('login')
 
     curso = get_object_or_404(Curso, id_curso=curso_id)
+
+    # Deleta dependências (ordem importa!)
+    Modulo.objects.filter(curso_id_curso=curso).delete()
+    Forum.objects.filter(curso=curso).delete()
+    Matricula.objects.filter(id_curso=curso).delete()
+
     curso.delete()
     messages.success(request, "Curso deletado com sucesso!")
     return redirect('gerenciar_cursos')
@@ -856,6 +864,13 @@ def deletar_aluno(request, aluno_id):
         return redirect('login')
 
     aluno = get_object_or_404(Aluno, id_aluno=aluno_id)
+
+    # Deletar manualmente as dependências
+    RespostaAluno.objects.filter(aluno=aluno).delete()
+    Postagem.objects.filter(autor_aluno=aluno).delete()
+    ProgressoArquivo.objects.filter(aluno=aluno).delete()
+    Matricula.objects.filter(id_aluno=aluno).delete()
+
     aluno.delete()
     messages.success(request, "Aluno deletado com sucesso!")
     return redirect('gerenciar_usuarios')
@@ -889,6 +904,10 @@ def deletar_professor(request, professor_id):
         return redirect('login')
 
     professor = get_object_or_404(Professor, id_professor=professor_id)
+
+    Postagem.objects.filter(autor_professor=professor).delete()
+    Aula.objects.filter(professor_id_professor=professor).delete()
+
     professor.delete()
     messages.success(request, "Professor deletado com sucesso!")
     return redirect('gerenciar_usuarios')

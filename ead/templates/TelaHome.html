@@ -50,6 +50,13 @@
           <div class="btn-cadastrar">
             <a href="{% url 'professor' %}"><button>MEU PERFIL</button></a>
           </div>
+          {% elif admin_logado %}
+          <div class="btn-login">
+            <a href="{% url 'logout' %}"><button>SAIR</button></a>
+          </div>
+          <div class="btn-cadastrar">
+            <a href="{% url 'admin_dashboard' %}"><button>PAINEL ADMIN</button></a>
+          </div>
           {% else %}
           <div class="btn-login">
             <a href="{% url 'login' %}"><button>LOGIN</button></a>

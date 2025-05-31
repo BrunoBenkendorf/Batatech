@@ -20,6 +20,7 @@ class Aluno(models.Model):
     cpf = models.CharField(db_column='CPF', unique=True, max_length=15)
     foto_perfil = models.ImageField(upload_to='perfil/alunos/', blank=True, null=True)
     is_active = models.BooleanField(default=True)
+
     class Meta:
         db_table = 'aluno'
 
@@ -51,6 +52,7 @@ class Professor(models.Model):
     formacao = models.CharField(db_column='Formacao', max_length=20)
     foto_perfil = models.ImageField(upload_to='perfil/professores/', blank=True, null=True)
     is_active = models.BooleanField(default=True)
+
     class Meta:
         db_table = 'professor'
 
@@ -58,7 +60,7 @@ class Professor(models.Model):
 class Modulo(models.Model):
     id_modulo = models.AutoField(db_column='ID_Modulo', primary_key=True)
     nome = models.CharField(db_column='Nome', max_length=45)
-    curso_id_curso = models.ForeignKey(Curso, models.DO_NOTHING, db_column='Curso_ID_Curso')
+    curso_id_curso = models.ForeignKey(Curso, on_delete=models.CASCADE, db_column='Curso_ID_Curso')
 
     class Meta:
         db_table = 'modulo'
@@ -67,8 +69,8 @@ class Modulo(models.Model):
 class Aula(models.Model):
     id_aula = models.AutoField(db_column='ID_Aula', primary_key=True)
     titulo = models.CharField(db_column='Titulo', max_length=45, blank=True, null=True)
-    modulo_id_modulo = models.ForeignKey(Modulo, models.DO_NOTHING, db_column='Modulo_ID_Modulo')
-    professor_id_professor = models.ForeignKey(Professor, models.DO_NOTHING, db_column='Professor_ID_Professor')
+    modulo_id_modulo = models.ForeignKey(Modulo, on_delete=models.CASCADE, db_column='Modulo_ID_Modulo')
+    professor_id_professor = models.ForeignKey(Professor, on_delete=models.CASCADE, db_column='Professor_ID_Professor')
 
     class Meta:
         db_table = 'aula'
@@ -77,7 +79,7 @@ class Aula(models.Model):
 class Arquivo(models.Model):
     tipo = models.CharField(max_length=50)
     descricao = models.CharField(max_length=255, default='Descrição não informada')
-    url_arquivo = models.FileField(upload_to='arquivos/')  # ✅ Caminho dentro de /media/arquivos/
+    url_arquivo = models.FileField(upload_to='arquivos/')
     aula_id_aula = models.ForeignKey('Aula', on_delete=models.CASCADE)
 
     def __str__(self):
@@ -87,7 +89,7 @@ class Arquivo(models.Model):
 class Exercicio(models.Model):
     id_exercicio = models.AutoField(db_column='ID_Exercicio', primary_key=True)
     enunciado = models.CharField(db_column='Enunciado', max_length=45)
-    aula_id_aula = models.ForeignKey(Aula, models.DO_NOTHING, db_column='Aula_ID_Aula')
+    aula_id_aula = models.ForeignKey(Aula, on_delete=models.CASCADE, db_column='Aula_ID_Aula')
 
     class Meta:
         db_table = 'exercicio'
@@ -96,7 +98,7 @@ class Exercicio(models.Model):
 class Avaliacao(models.Model):
     id_avaliacao = models.AutoField(db_column='ID_Avaliacao', primary_key=True)
     titulo = models.CharField(db_column='Titulo', max_length=45)
-    modulo_id_modulo = models.ForeignKey(Modulo, models.DO_NOTHING, db_column='Modulo_ID_Modulo')
+    modulo_id_modulo = models.ForeignKey(Modulo, on_delete=models.CASCADE, db_column='Modulo_ID_Modulo')
 
     class Meta:
         db_table = 'avaliacao'
@@ -110,20 +112,15 @@ class Questao(models.Model):
     alternativa_b = models.CharField(max_length=255)
     alternativa_c = models.CharField(max_length=255)
     alternativa_d = models.CharField(max_length=255)
-    resposta_correta = models.CharField(max_length=1, choices=[
-        ('A', 'A'),
-        ('B', 'B'),
-        ('C', 'C'),
-        ('D', 'D')
-    ])
+    resposta_correta = models.CharField(max_length=1, choices=[('A', 'A'), ('B', 'B'), ('C', 'C'), ('D', 'D')])
 
     class Meta:
         db_table = 'questao'
 
 
 class QuestaoHasAvaliacao(models.Model):
-    questao_id_questao = models.ForeignKey(Questao, models.CASCADE, db_column='questao_id_questao')
-    avaliacao_id_avaliacao = models.ForeignKey(Avaliacao, models.CASCADE, db_column='avaliacao_id_avaliacao')
+    questao_id_questao = models.ForeignKey(Questao, on_delete=models.CASCADE, db_column='questao_id_questao')
+    avaliacao_id_avaliacao = models.ForeignKey(Avaliacao, on_delete=models.CASCADE, db_column='avaliacao_id_avaliacao')
 
     class Meta:
         db_table = 'questao_has_avaliacao'
@@ -132,8 +129,8 @@ class QuestaoHasAvaliacao(models.Model):
 
 class Matricula(models.Model):
     id_matricula = models.AutoField(db_column='ID_Matricula', unique=True, primary_key=True)
-    id_aluno = models.ForeignKey(Aluno, models.DO_NOTHING, db_column='ID_Aluno')
-    id_curso = models.ForeignKey(Curso, models.DO_NOTHING, db_column='ID_Curso')
+    id_aluno = models.ForeignKey(Aluno, on_delete=models.CASCADE, db_column='ID_Aluno')
+    id_curso = models.ForeignKey(Curso, on_delete=models.CASCADE, db_column='ID_Curso')
     data_matricula = models.DateField(db_column='Data_Matricula')
 
     class Meta:
@@ -170,21 +167,20 @@ class MensagemContato(models.Model):
 
     class Meta:
         db_table = 'mensagem_contato'
+
+
 class RespostaAluno(models.Model):
     id_resposta = models.AutoField(primary_key=True)
     aluno = models.ForeignKey(Aluno, on_delete=models.CASCADE)
     avaliacao = models.ForeignKey(Avaliacao, on_delete=models.CASCADE)
     questao = models.ForeignKey(Questao, on_delete=models.CASCADE)
-    resposta_escolhida = models.CharField(max_length=1, choices=[
-        ('A', 'A'),
-        ('B', 'B'),
-        ('C', 'C'),
-        ('D', 'D')
-    ])
+    resposta_escolhida = models.CharField(max_length=1, choices=[('A', 'A'), ('B', 'B'), ('C', 'C'), ('D', 'D')])
     data_resposta = models.DateTimeField(auto_now_add=True)
 
     class Meta:
         db_table = 'resposta_aluno'
+
+
 class Forum(models.Model):
     id_forum = models.AutoField(primary_key=True)
     curso = models.ForeignKey(Curso, on_delete=models.CASCADE)
