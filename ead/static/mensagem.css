@@ -1,0 +1,33 @@
+.messages-container {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 20px;
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .messages-container h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 30px;
+        }
+        .message-list {
+            list-style: none;
+            padding: 0;
+        }
+        .message-list li {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin-bottom: 15px;
+            padding: 15px;
+        }
+        .message-list li strong {
+            color: #e67e22;
+        }
+        .message-list li small {
+            display: block;
+            margin-top: 5px;
+            color: #777;
+            font-size: 0.9em;
+        }

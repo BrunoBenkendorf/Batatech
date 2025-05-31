@@ -12,6 +12,8 @@
 </head>
 
 <body class="bg-custom font-sans flex items-center justify-center min-h-screen">
+  <script src="{% static 'js/configglobal.js' %}"></script>
+
 
   <div class="bg-white w-full max-w-4xl rounded shadow-md p-6">
     <h2 class="text-xl font-bold border-b pb-2 mb-4">Editar Perfil</h2>
@@ -26,15 +28,14 @@
           <label class="text-sm font-semibold mt-2 mb-1">Foto de Perfil</label>
 
           {% if usuario.foto_perfil %}
-            <img src="{{ usuario.foto_perfil.url }}" alt="Foto de Perfil"
-              class="mt-2 max-h-52 rounded-full border object-cover">
+          <img src="{{ usuario.foto_perfil.url }}" alt="Foto de Perfil"
+            class="mt-2 max-h-52 rounded-full border object-cover">
           {% else %}
-            <img src="{% static 'imagens/default-user.png' %}" alt="Foto de Perfil"
-              class="mt-2 max-h-52 rounded-full border object-cover">
+          <img src="{% static 'imagens/default-user.png' %}" alt="Foto de Perfil"
+            class="mt-2 max-h-52 rounded-full border object-cover">
           {% endif %}
 
-          <input type="file" name="foto_perfil" accept="image/*"
-            class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 
+          <input type="file" name="foto_perfil" accept="image/*" class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 
             file:rounded-lg file:border-0 file:text-sm file:font-semibold 
             file:bg-orange-600 file:text-white hover:file:bg-orange-700 cursor-pointer mt-4" />
 
@@ -45,8 +46,7 @@
           <div class="flex gap-4">
             <div class="w-1/2">
               <label class="block text-sm font-semibold mb-1">Nome</label>
-              <input type="text" name="nome" value="{{ nome }}" required
-                class="w-full border px-3 py-2 rounded">
+              <input type="text" name="nome" value="{{ nome }}" required class="w-full border px-3 py-2 rounded">
             </div>
             <div class="w-1/2">
               <label class="block text-sm font-semibold mb-1">Sobrenome</label>
@@ -63,15 +63,13 @@
 
           <div>
             <label class="block text-sm font-semibold mb-1">Telefone</label>
-            <input type="tel" name="telefone" value="{{ usuario.telefone }}" 
-              class="w-full border px-3 py-2 rounded">
+            <input type="tel" name="telefone" value="{{ usuario.telefone }}" class="w-full border px-3 py-2 rounded">
           </div>
 
           {% if perfil_tipo == "professor" %}
           <div>
             <label class="block text-sm font-semibold mb-1">Formação Acadêmica</label>
-            <input type="text" name="formacao" value="{{ usuario.formacao }}"
-              class="w-full border px-3 py-2 rounded">
+            <input type="text" name="formacao" value="{{ usuario.formacao }}" class="w-full border px-3 py-2 rounded">
           </div>
 
           <div>
@@ -96,10 +94,8 @@
 
           <!-- Botões -->
           <div class="pt-4 flex gap-4">
-            <a href="javascript:history.back()"
-              class="bg-gray-200 hover:bg-gray-300 px-4 py-2 rounded">Voltar</a>
-            <button type="submit"
-              class="bg-orange-600 hover:bg-orange-700 px-4 py-2 text-white rounded">Salvar</button>
+            <a href="javascript:history.back()" class="bg-gray-200 hover:bg-gray-300 px-4 py-2 rounded">Voltar</a>
+            <button type="submit" class="bg-orange-600 hover:bg-orange-700 px-4 py-2 text-white rounded">Salvar</button>
           </div>
 
         </div>

@@ -2,18 +2,20 @@
 <html lang="pt-BR">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>BataTECH Cursos EAD</title>
     {% load static %}
-    <link rel="stylesheet" href="{% static 'curso.css' %}">
-    <link rel="stylesheet" href="{% static 'cabecalho.css' %}">
-    <link rel="stylesheet" href="{% static 'rodape.css' %}">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
-    <link rel="icon" type="image/png" href="{% static 'imagens/favicon.png' %}">
+    <link rel="stylesheet" href="{% static 'curso.css' %}" />
+    <link rel="stylesheet" href="{% static 'cabecalho.css' %}" />
+    <link rel="stylesheet" href="{% static 'perfil.css' %}" />
+    <link rel="stylesheet" href="{% static 'rodape.css' %}" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" />
+    <link rel="icon" type="image/png" href="{% static 'imagens/favicon.png' %}" />
 </head>
 
 <body>
+    {% csrf_token %}
     <script src="{% static 'js/configglobal.js' %}"></script>
 
     <header id="efeito">
@@ -24,7 +26,7 @@
                 </a>
                 <div class="pesquisa-container">
                     <form action="{% url 'buscar_cursos' %}" method="get" class="pesquisa-container">
-                        <input type="text" name="q" class="pesquisa-txt" placeholder="Pesquisar cursos...">
+                        <input type="text" name="q" class="pesquisa-txt" placeholder="Pesquisar cursos..." />
                         <button type="submit" class="pesquisa-btn">
                             <i class="bi bi-search"></i>
                         </button>
@@ -33,19 +35,30 @@
                 <div class="acoes-header">
                     <nav>
                         <ul>
-                            <li><a href="{% url 'faleconosco' %}"><i class="bi bi-headset"></i></a></li>
+                            <li>
+                                <a href="{% url 'faleconosco' %}">
+                                    <i class="bi bi-headset"></i>
+                                </a>
+                            </li>
                         </ul>
                     </nav>
                     <div class="user-dropdown" id="userDropdown">
                         <div class="aluno-info" id="alunoinfo">
-                            <div class="icone-aluno">👨‍🎓</div>
-                            <span>{{ aluno.nome }}</span><!-- mostra o nome real -->
+                            <div class="icone-aluno">
+                                {% if aluno.foto_perfil %}
+                                <img src="{{ aluno.foto_perfil.url }}" alt="Foto de Perfil"
+                                    class="w-10 h-10 rounded-full object-cover" />
+                                {% else %}
+                                👤
+                                {% endif %}
+                            </div>
+                            <span>{{ aluno.nome }}</span>
                             <i class="bi bi-caret-down-fill"></i>
                         </div>
                         <div class="dropdown-content" id="dropdownMenu">
-                            <a href="../perfil">Perfil</a>
+                            <a href="{% url 'perfil' %}">Perfil</a>
                             <a href="{% url 'resultados_aluno' %}">Meus Resultados</a>
-                            <a href="../config">Configurações</a>
+                            <a href="{% url 'config' %}">Configurações</a>
                             <a href="{% url 'logout' %}">Sair</a>
                         </div>
                     </div>
@@ -55,67 +68,97 @@
     </header>
 
     <main class="principal">
-        <div style="display: flex; justify-content: flex-start; padding: 0px 6px;">
+        <div style="
+                display: flex;
+                justify-content: flex-start;
+                padding: 0px 6px;
+            ">
             <a href="{% url 'aluno' %}" class="btn btn-white"
-                style="background-color: black; color: white; padding: 10px 30px;">
-                <i class="bi bi-arrow-left-circle-fill" style="margin-right: 8px;"></i>Voltar
+                style="background-color: black; color: white; padding: 10px 30px">
+                <i class="bi bi-arrow-left-circle-fill" style="margin-right: 8px"></i>Voltar
             </a>
         </div>
 
         <section class="sessao-curso">
             <h2>Curso: {{ curso.nome }}</h2>
 
+            <div class="barra-progresso" data-progresso="{{ progresso }}">
+                <p>
+                    Progresso do curso: <strong>{{ progresso }}%</strong><br />
+                    Arquivos: {{ visualizados_ids|length }}/{{ total_arquivos }} |
+                    Provas: {{ provas_concluidas }}/{{ total_provas }}
+                </p>
+                <div class="barra-progresso-container">
+                    <div class="barra-progresso-preenchimento"></div>
+                </div>
+            </div>
+
+
             <div class="aba-navegacao">
-                <button class="aba ativo" onclick="trocarAba('atividades')">Atividades</button>
-                <button class="aba" onclick="trocarAba('biblioteca')">Biblioteca</button>
-                <button class="aba" onclick="trocarAba('provas')">Provas</button>
-                <button class="aba" onclick="trocarAba('foruns')">Fóruns</button>
+                <button class="aba ativo" onclick="trocarAba('atividades', event)">
+                    Atividades
+                </button>
+                <button class="aba" onclick="trocarAba('biblioteca', event)">
+                    Biblioteca
+                </button>
+                <button class="aba" onclick="trocarAba('provas', event)">Provas</button>
+                <button class="aba" onclick="trocarAba('foruns', event)">Fóruns</button>
             </div>
 
-            <!-- ATIVIDADES -->
             <div id="atividades" class="conteudo-aba ativo">
-                {% for arquivo in arquivos %}
-                {% if arquivo.tipo == "atividade" %}
+                {% if arquivos_atividade %}
+                {% for arquivo in arquivos_atividade %}
                 <div class="card-conteudo">
                     <h3>{{ arquivo.descricao }}</h3>
-                    <a href="{{ arquivo.url_arquivo.url }}" download>Baixar Atividade</a>
-                </div>
-                {% endif %}
-                {% empty %}
-                <p>Nenhuma atividade disponível.</p>
-                {% endfor %}
-            </div>
-
-            <!-- BIBLIOTECA -->
-            <div id="biblioteca" class="conteudo-aba">
-                {% for arquivo in arquivos %}
-                {% if arquivo.tipo == "pdf" or arquivo.tipo == "video" %}
-                <div class="card-conteudo">
-                    <h3>{{ arquivo.descricao }}</h3>
-                    <a href="{{ arquivo.url_arquivo.url }}" target="_blank">
-                        {% if arquivo.tipo == "pdf" %}Download PDF{% else %}Assistir Vídeo{% endif %}
+                    <a href="{% url 'baixar_arquivo' arquivo.id %}" class="link-arquivo" data-id="{{ arquivo.id }}">
+                        Baixar Atividade
                     </a>
+                    {% if arquivo.id in visualizados_ids %}
+                    <span class="visualizado-span" style="color: green">✔ Visualizado</span>
+                    {% endif %}
                 </div>
-                {% endif %}
-                {% empty %}
-                <p>Nenhum material disponível.</p>
                 {% endfor %}
+                {% else %}
+                <p>Nenhuma atividade disponível.</p>
+                {% endif %}
             </div>
 
-            <!-- PROVAS -->
-            <div id="provas" class="conteudo-aba">
-                {% if avaliacoes %}
-                {% for avaliacao in avaliacoes %}
+            <div id="biblioteca" class="conteudo-aba">
+                {% if arquivos_biblioteca %}
+                {% for arquivo in arquivos_biblioteca %}
                 <div class="card-conteudo">
-                    <h3>{{ avaliacao.titulo }}</h3>
-                    <a href="{% url 'responder_prova' avaliacao.id_avaliacao %}">Responder Prova</a>
+                    <h3>{{ arquivo.descricao }}</h3>
+                    <a href="{% url 'baixar_arquivo' arquivo.id %}" class="link-arquivo" data-id="{{ arquivo.id }}">
+                        Baixar Arquivo
+                    </a>
+                    {% if arquivo.id in visualizados_ids %}
+                    <span class="visualizado-span" style="color: green">✔ Visualizado</span>
+                    {% endif %}
+                </div>
+                {% endfor %}
+                {% else %}
+                <p>Nenhum material disponível.</p>
+                {% endif %}
+            </div>
+
+            <div id="provas" class="conteudo-aba">
+                {% if avaliacoes_status %}
+                {% for item in avaliacoes_status %}
+                <div class="card-conteudo">
+                    <h3>{{ item.avaliacao.titulo }}</h3>
+                    <p>
+                        Status:
+                        {% if item.respondida %}✅ Respondida{% else %}🕐 Não
+                        respondida{% endif %}
+                    </p>
+                    <a href="{% url 'responder_prova' item.avaliacao.id_avaliacao %}">Responder Prova</a>
                 </div>
                 {% endfor %}
                 {% else %}
                 <p>Nenhuma prova disponível.</p>
                 {% endif %}
             </div>
-            <!-- FORUNS -->
+
             <div id="foruns" class="conteudo-aba">
                 {% if curso %}
                 <a href="{% url 'listar_foruns' curso.id_curso %}" class="btn btn-white">Acessar Fóruns do Curso</a>
@@ -133,7 +176,7 @@
                 <div class="social-icons"></div>
             </div>
         </div>
-        <hr>
+        <hr />
         <div class="footer-bottom">
             <p>Copyright ©2025 BataTECH - Todos os direitos reservados</p>
             <div class="footer-links">
@@ -149,16 +192,9 @@
     </footer>
 
     <script src="{% static 'js/curso.js' %}"></script>
-    <script src="{%static 'js/aluno.js'%}"></script>
-    <script src="{%static 'js/menu.js'%}"></script>
-    <script>
-        function trocarAba(id) {
-            document.querySelectorAll('.conteudo-aba').forEach(el => el.classList.remove('ativo'));
-            document.querySelectorAll('.aba').forEach(el => el.classList.remove('ativo'));
-            document.getElementById(id).classList.add('ativo');
-            event.target.classList.add('ativo');
-        }
-    </script>
+    <script src="{% static 'js/aluno.js' %}"></script>
+    <script src="{% static 'js/menu.js' %}"></script>
+
 </body>
 
 </html>

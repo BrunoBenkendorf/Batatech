@@ -19,6 +19,7 @@ class Aluno(models.Model):
     email = models.CharField(db_column='Email', max_length=45)
     cpf = models.CharField(db_column='CPF', unique=True, max_length=15)
     foto_perfil = models.ImageField(upload_to='perfil/alunos/', blank=True, null=True)
+    is_active = models.BooleanField(default=True)
     class Meta:
         db_table = 'aluno'
 
@@ -49,6 +50,7 @@ class Professor(models.Model):
     experiencia = models.CharField(db_column='Experiencia', max_length=45)
     formacao = models.CharField(db_column='Formacao', max_length=20)
     foto_perfil = models.ImageField(upload_to='perfil/professores/', blank=True, null=True)
+    is_active = models.BooleanField(default=True)
     class Meta:
         db_table = 'professor'
 
@@ -120,8 +122,8 @@ class Questao(models.Model):
 
 
 class QuestaoHasAvaliacao(models.Model):
-    questao_id_questao = models.ForeignKey(Questao, models.DO_NOTHING, db_column='questao_id_questao')
-    avaliacao_id_avaliacao = models.ForeignKey(Avaliacao, models.DO_NOTHING, db_column='avaliacao_id_avaliacao')
+    questao_id_questao = models.ForeignKey(Questao, models.CASCADE, db_column='questao_id_questao')
+    avaliacao_id_avaliacao = models.ForeignKey(Avaliacao, models.CASCADE, db_column='avaliacao_id_avaliacao')
 
     class Meta:
         db_table = 'questao_has_avaliacao'
@@ -138,14 +140,15 @@ class Matricula(models.Model):
         db_table = 'matricula'
 
 
-class Progresso(models.Model):
-    id_progresso = models.AutoField(db_column='ID_Progresso', unique=True, primary_key=True)
-    id_usuario = models.ForeignKey(Aluno, models.DO_NOTHING, db_column='ID_Usuario')
-    id_aula = models.ForeignKey(Aula, models.DO_NOTHING, db_column='ID_Aula')
-    status = models.CharField(db_column='Status', max_length=10)
+class ProgressoArquivo(models.Model):
+    aluno = models.ForeignKey(Aluno, on_delete=models.CASCADE)
+    arquivo = models.ForeignKey(Arquivo, on_delete=models.CASCADE)
+    visualizado = models.BooleanField(default=False)
+    data_visualizacao = models.DateTimeField(auto_now_add=True)
 
     class Meta:
-        db_table = 'progresso'
+        unique_together = ('aluno', 'arquivo')
+        db_table = 'progresso_arquivo'
 
 
 class Suporte(models.Model):

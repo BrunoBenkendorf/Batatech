@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar Aluno - Admin</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'prof.css' %}">
+        <link rel="stylesheet" href="{% static 'editaluno.css' %}">
+    <link rel="stylesheet" href="{% static 'cabecalho.css' %}">
+    <link rel="stylesheet" href="{% static 'rodape.css' %}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <link rel="icon" type="image/png" href="{% static 'imagens/favicon.png' %}">
+</head>
+<body>
+    <script src="{% static 'js/configglobal.js' %}"></script>
+    <header id="efeito">
+        <div class="container">
+          <div class="flex">
+            <a href="{% url 'home' %}">
+              <h1>BataTECH</h1>
+            </a>
+            <div class="pesquisa-container">
+              <form action="{% url 'buscar_cursos' %}" method="get" class="pesquisa-container">
+                <input type="text" name="q" class="pesquisa-txt" placeholder="Pesquisar cursos...">
+                <button type="submit" class="pesquisa-btn">
+                  <i class="bi bi-search"></i>
+                </button>
+              </form>
+            </div>
+            <div class="acoes-header">
+              <nav>
+                <ul>
+                  <li><a href="{% url 'faleconosco' %}"><i class="bi bi-headset"></i></a></li>
+                </ul>
+              </nav>
+              <div class="user-dropdown" id="userDropdown">
+                <div class="user-icon-prof">
+                    👤
+                </div>
+                <span>Administrador</span>
+                <i class="bi bi-caret-down-fill"></i>
+                </div>
+                <div class="dropdown-content" id="dropdownMenu">
+                  <a href="{% url 'config' %}">Configurações</a>
+                  <a href="{% url 'logout' %}">Sair</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </header>
+
+    <main class="main-content">
+        <div class="edit-user-container">
+            <h1>Editar Aluno: {{ usuario.nome }}</h1>
+
+            {% if messages %}
+                <ul class="messages">
+                    {% for message in messages %}
+                        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+
+            <form method="post" enctype="multipart/form-data" class="edit-user-form">
+                {% csrf_token %}
+                <label for="nome">Nome Completo:</label>
+                <input type="text" id="nome" name="nome" value="{{ usuario.nome }}" required>
+
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" value="{{ usuario.email }}" required>
+
+                <label for="telefone">Telefone:</label>
+                <input type="tel" id="telefone" name="telefone" value="{{ usuario.telefone }}">
+
+                <label for="cpf">CPF:</label>
+                <input type="text" id="cpf" name="cpf" value="{{ usuario.cpf }}" required>
+
+                <label for="senha">Nova Senha (deixe em branco para não alterar):</label>
+                <input type="password" id="senha" name="senha">
+
+                <label for="foto_perfil">Foto de Perfil:</label>
+                <input type="file" id="foto_perfil" name="foto_perfil" accept="image/*">
+                {% if usuario.foto_perfil %}
+                    <p>Foto atual: <img src="{{ usuario.foto_perfil.url }}" alt="Foto de Perfil" style="max-width: 80px; height: 80px; border-radius: 50%; object-fit: cover; vertical-align: middle;"></p>
+                {% endif %}
+
+                <button type="submit">Salvar Alterações</button>
+            </form>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-top">
+          <div class="footer-logo-block">
+            <h2 class="footer-text">BataTECH</h2>
+            <div class="social-icons"></div>
+          </div>
+        </div>
+        <hr>
+        <div class="footer-bottom">
+          <p>Copyright ©2025 BataTECH - Todos os direitos reservados</p>
+          <div class="footer-links">
+            <a href="{% url 'faleconosco' %}">Central de Ajuda</a>
+            <span class="dot">•</span>
+            <a href="{% url 'contato' %}">Contato</a>
+            <span class="dot">•</span>
+            <a href="{% url 'termo' %}">Termos de uso</a>
+            <span class="dot">•</span>
+            <a href="{% url 'privacidade' %}">Política de privacidade</a>
+          </div>
+        </div>
+      </footer>
+      <script src="{% static 'js/prof.js' %}"></script>
+      <script src="{% static 'js/menu.js' %}"></script>
+</body>
+</html>

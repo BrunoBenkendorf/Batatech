@@ -4,22 +4,27 @@
 
   const config = JSON.parse(configSalva);
 
-  // Aplica tema escuro
+  // Aplica tema escuro com imagem
   if (config.temaEscuro) {
-    document.body.style.background = 'linear-gradient(#1a1a1a, #333)fixed';
+    document.body.style.backgroundImage = "url('/static/imagens/fundo.svg')";
+    document.body.style.backgroundSize = 'cover';
+    document.body.style.backgroundRepeat = 'no-repeat';
+    document.body.style.backgroundAttachment = 'fixed'; // para efeito fixo
     document.body.style.color = 'white';
   } else {
-    document.body.style.background = 'linear-gradient(#fdf5ad, #fab663)fixed';
+    // Tema claro com outra imagem
+    document.body.style.backgroundImage = "url('/static/imagens/test.svg')";
+    document.body.style.backgroundSize = 'cover';
+    document.body.style.backgroundRepeat = 'no-repeat';
+    document.body.style.backgroundAttachment = 'fixed';
     document.body.style.color = 'black';
   }
 
-  // Exemplo simples de tradução de título
+  // Tradução do título
   const h1 = document.querySelector('h1');
   if (config.idioma === 'en' && h1) {
     h1.textContent = 'BataTECH - Courses';
   } else if (config.idioma === 'es' && h1) {
     h1.textContent = 'BataTECH - Cursos';
   }
-
-  // Você pode expandir isso para menus, botões, etc., com um sistema de tradução real
 })();

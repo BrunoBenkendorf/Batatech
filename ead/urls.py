@@ -11,7 +11,7 @@ urlpatterns = [
     path('privacidade/', views.privacidade, name='privacidade'),
     path('config/', views.config, name='config'),
     path('perfil/', views.perfil, name='perfil'),
-    path('cadcurso', views.cadcurso, name='CadCurso'),
+    path('cadcurso/', views.cadcurso, name='cadcurso'),
     path('altera', views.altera, name='Altera'),
     path('seleciona', views.seleciona, name='Seleciona'),
     path('pagamento/', views.pagamento, name='pagamento'),
@@ -36,5 +36,27 @@ urlpatterns = [
     path('curso/<int:curso_id>/foruns/', views.listar_foruns, name='listar_foruns'),
     path('seleciona_forum/', views.seleciona_forum, name='seleciona_forum'),
     path('forum/<int:forum_id>/', views.visualizar_forum, name='visualizar_forum'),
-    path('buscar/', views.buscar_cursos, name='buscar_cursos')
+    path('buscar/', views.buscar_cursos, name='buscar_cursos'),
+    path('deletar_arquivo/<int:arquivo_id>/', views.deletar_arquivo, name='deletar_arquivo'),
+    path('editar_arquivo/<int:arquivo_id>/', views.editar_arquivo, name='editar_arquivo'),
+    path('deletar_prova/<int:avaliacao_id>/', views.deletar_prova, name='deletar_prova'),
+    path('deletar_forum/<int:forum_id>/', views.deletar_forum, name='deletar_forum'),
+    path('registrar_visualizacao/<int:arquivo_id>/', views.registrar_visualizacao, name='registrar_visualizacao'),
+    path('baixar_arquivo/<int:arquivo_id>/', views.baixar_arquivo, name='baixar_arquivo'),  # ✅ Adicionado
+    path('admin_dashboard/', views.admin_dashboard, name='admin_dashboard'),
+    path('admin/cursos/', views.gerenciar_cursos, name='gerenciar_cursos'),
+    path('admin/cursos/editar/<int:curso_id>/', views.editar_curso, name='editar_curso'),
+    path('admin/cursos/deletar/<int:curso_id>/', views.deletar_curso, name='deletar_curso'),
+    path('admin/usuarios/', views.gerenciar_usuarios, name='gerenciar_usuarios'),
+    path('admin/usuarios/editar/aluno/<int:aluno_id>/', views.editar_aluno, name='editar_aluno'),
+    path('admin/usuarios/deletar/aluno/<int:aluno_id>/', views.deletar_aluno, name='deletar_aluno'),
+    path('admin/usuarios/editar/professor/<int:professor_id>/', views.editar_professor, name='editar_professor'),
+    path('admin/usuarios/deletar/professor/<int:professor_id>/', views.deletar_professor, name='deletar_professor'),
+    path('admin/mensagens/', views.listar_mensagens_contato, name='listar_mensagens_contato'),
+    path('inativar_aluno/<int:aluno_id>/', views.inativar_aluno, name='inativar_aluno'),
+    path('ativar_aluno/<int:aluno_id>/', views.ativar_aluno, name='ativar_aluno'),
+
+    # URLs para gerenciar status de Professores
+    path('inativar_professor/<int:professor_id>/', views.inativar_professor, name='inativar_professor'),
+    path('ativar_professor/<int:professor_id>/', views.ativar_professor, name='ativar_professor'),
 ]

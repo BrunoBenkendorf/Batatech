@@ -1,0 +1,194 @@
+@import url('https://fonts.googleapis.com/css2?family=Modak&family=Titan+One&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;400;500;600;700&display=swap');
+
+/* Reset geral */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Corpo */
+body {
+  font-family: Arial, sans-serif;
+  background:#fdf5ad;
+}
+
+a {
+  text-decoration: none;
+}
+
+/* Conteúdo principal */
+.main-content {
+  text-align: center;
+  padding: 140px 20px 20px 20px;
+  /* padding-top aumentado por causa do header fixo */
+}
+
+.course-section {
+  margin: 30px 0;
+}
+
+.course-section img {
+  width: 80%;
+  max-width: 600px;
+  border-radius: 10px;
+  margin: 10px 0;
+}
+
+/* Botão criar curso */
+.text-box {
+  margin-top: 20px;
+}
+
+.btn {
+  text-transform: uppercase;
+  text-decoration: none;
+  padding: 13px 100px;
+  display: inline-block;
+  border-radius: 100px;
+  transition: all 0.2s;
+  position: relative;
+  font-family: "Rajdhani", sans-serif;
+  font-weight: 500;
+  font-size: 15px;
+  cursor: pointer;
+}
+
+.btn-white {
+  background-color: black;
+  color: #eb9f5c;
+}
+
+.btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+.btn::after {
+  content: "";
+  display: inline-block;
+  height: 100%;
+  width: 100%;
+  border-radius: 100px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -1;
+  background-color: black;
+  transition: all 0.4s;
+}
+
+.btn:hover::after {
+  transform: scaleX(1.4) scaleY(1.6);
+  opacity: 0;
+}
+.white-container {
+    background-color: white; /* Cor de fundo branca */
+    padding: 30px; /* Espaçamento interno */
+    border-radius: 8px; /* Cantos arredondados */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra suave */
+    margin: 40px auto; /* Centraliza o container e adiciona margem superior/inferior */
+    max-width: 900px; /* Largura máxima para o container */
+}
+
+/* Opcional: Ajuste os estilos existentes para as cards dentro do container */
+.admin-dashboard-summary {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap; /* Permite que as cards quebrem para a próxima linha em telas menores */
+    gap: 20px; /* Espaçamento entre as cards */
+}
+
+.summary-card {
+    background-color: #f9f9f9; /* Um cinza claro para as cards, se desejar */
+    padding: 20px;
+    border-radius: 5px;
+    text-align: center;
+    flex: 1; /* Permite que as cards ocupem o espaço disponível */
+    min-width: 200px; /* Largura mínima para as cards */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.summary-card h3 {
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.summary-card p {
+    font-size: 2em;
+    font-weight: bold;
+    color: #ffbb00e1; /* Uma cor de destaque para os números */
+}
+.status-inactive {
+  color: #dc3545; /* Vermelho para inativo */
+  font-weight: bold;
+  margin-left: 10px;
+}
+
+.action-btn {
+  padding: 6px 10px; /* Ajustado para 6px 10px conforme o HTML fornecido */
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-block;
+  margin-left: 10px; /* Ajustado para 10px conforme o HTML fornecido */
+  font-size: 0.85em; /* Ajustado para 0.85em conforme o HTML fornecido */
+  transition: background-color 0.2s ease;
+}
+
+.edit-btn {
+  background-color: #28a745; /* Verde do seu HTML */
+  color: white;
+}
+.edit-btn:hover {
+  background-color: #218838;
+}
+
+.inactivate-btn {
+  background-color: #ffc107; /* Amarelo */
+  color: #333; /* Texto mais escuro para contraste */
+}
+.inactivate-btn:hover {
+  background-color: #e0a800;
+}
+
+.activate-btn {
+  background-color: #007bff; /* Azul (usei este no HTML anterior, se preferir o verde claro pode ajustar) */
+  color: white;
+}
+.activate-btn:hover {
+  background-color: #0056b3;
+}
+
+.delete-btn {
+  background-color: #dc3545; /* Vermelho do seu HTML */
+  color: white;
+}
+.delete-btn:hover {
+  background-color: #c82333;
+}
+
+.user-actions {
+  display: flex;
+  gap: 5px; /* Espaçamento entre os botões */
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  /* margin-top: 10px; Removido se já estiver no LI ou se não for necessário */
+}
+
+/* Os estilos .user-management-container, .user-section, .user-list, .user-info, .user-info img, .messages, messages li.success já estão no seu HTML inline style */
+/* Mantenha-os onde estão ou mova-os para o arquivo CSS externo para melhor organização */
+
+@media (max-width: 768px) {
+  .user-list li {
+      flex-direction: column;
+      align-items: flex-start;
+  }
+  .user-actions {
+      width: 100%;
+      justify-content: flex-start;
+      margin-top: 15px;
+  }
+}

@@ -1,0 +1,60 @@
+<header id="efeito">
+        <div class="container">
+            <div class="flex">
+                <a href="{% url 'home' %}">
+                    <h1>BataTECH</h1>
+                </a>
+                <div class="pesquisa-container">
+                    <form
+                        action="{% url 'buscar_cursos' %}"
+                        method="get"
+                        class="pesquisa-container"
+                    >
+                        <input
+                            type="text"
+                            name="q"
+                            class="pesquisa-txt"
+                            placeholder="Pesquisar cursos..."
+                        />
+                        <button type="submit" class="pesquisa-btn">
+                            <i class="bi bi-search"></i>
+                        </button>
+                    </form>
+                </div>
+                <div class="acoes-header">
+                    <nav>
+                        <ul>
+                            <li>
+                                <a href="{% url 'faleconosco' %}">
+                                    <i class="bi bi-headset"></i>
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+                    <div class="user-dropdown" id="userDropdown">
+                        <div class="aluno-info" id="alunoinfo">
+                            <div class="icone-aluno">
+                                {% if aluno.foto_perfil %}
+                                <img
+                                    src="{{ aluno.foto_perfil.url }}"
+                                    alt="Foto de Perfil"
+                                    class="w-10 h-10 rounded-full object-cover"
+                                />
+                                {% else %}
+                                👤
+                                {% endif %}
+                            </div>
+                            <span>{{ aluno.nome }}</span>
+                            <i class="bi bi-caret-down-fill"></i>
+                        </div>
+                        <div class="dropdown-content" id="dropdownMenu">
+                            <a href="{% url 'perfil' %}">Perfil</a>
+                            <a href="{% url 'resultados_aluno' %}">Meus Resultados</a>
+                            <a href="{% url 'config' %}">Configurações</a>
+                            <a href="{% url 'logout' %}">Sair</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>

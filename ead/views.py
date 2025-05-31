@@ -1,10 +1,14 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Aluno, Professor, MensagemContato, Curso, Matricula, Arquivo, Modulo, Aula,Avaliacao,Questao, QuestaoHasAvaliacao,RespostaAluno,Forum, Postagem
+from .models import Aluno, Professor, MensagemContato, Curso, Matricula, Arquivo, Modulo, Aula,Avaliacao,Questao, QuestaoHasAvaliacao,RespostaAluno,Forum, Postagem,ProgressoArquivo, Administrador
 from django.http import HttpResponse, JsonResponse
 from django.db import IntegrityError
 from datetime import date
 from django.contrib import messages
 from django.db.models import Q
+from django.urls import reverse
+from django.http import FileResponse, Http404
+import os
+
 
 def index(request):
     cursos = Curso.objects.all()
@@ -22,20 +26,44 @@ def login_usuario(request):
         email = request.POST.get("email")
         senha = request.POST.get("senha")
 
+        # Lógica para Aluno
         try:
             aluno = Aluno.objects.get(email=email, senha=senha)
+            if not aluno.is_active: # Adicionado: Verifica se o aluno está ativo
+                return render(request, "TelaLogin.html", {
+                    "erro": "Sua conta de aluno está inativa. Entre em contato com o suporte."
+                })
             request.session['aluno_id'] = aluno.id_aluno
             return redirect('home')
         except Aluno.DoesNotExist:
-            try:
-                professor = Professor.objects.get(email=email, senha=senha)
-                request.session['professor_id'] = professor.id_professor
-                return redirect('home')
-            except Professor.DoesNotExist:
-                return render(request, "TelaLogin.html", {
-                    "erro": "E-mail ou senha inválidos. Tente novamente."
-                })
+            pass
 
+        # Lógica para Professor
+        try:
+            professor = Professor.objects.get(email=email, senha=senha)
+            if not professor.is_active: # Adicionado: Verifica se o professor está ativo
+                return render(request, "TelaLogin.html", {
+                    "erro": "Sua conta de professor está inativa. Entre em contato com o suporte."
+                })
+            request.session['professor_id'] = professor.id_professor
+            return redirect('home')
+        except Professor.DoesNotExist:
+            pass
+        
+        # Lógica para Administrador (se ele usar esta mesma tela de login)
+        try:
+            administrador = Administrador.objects.get(email=email, senha=senha)
+            # Para o admin, você pode decidir se ele também pode ser inativado ou se essa verificação é apenas para usuários normais
+            # Se sim, adicione: if not administrador.is_active: ...
+            request.session['admin_id'] = administrador.id_administrador
+            return redirect('admin_dashboard') # Redireciona para o painel de admin
+        except Administrador.DoesNotExist:
+            pass
+
+        # Se nenhuma das tentativas de login foi bem-sucedida
+        return render(request, "TelaLogin.html", {
+            "erro": "E-mail ou senha inválidos. Tente novamente."
+        })
     return render(request, "TelaLogin.html")
 
 def faleconosco(request):
@@ -76,7 +104,7 @@ def perfil(request):
 def professor(request):
     professor_id = request.session.get('professor_id')
     if not professor_id:
-        return redirect('login') 
+        return redirect('login')
 
     professor = get_object_or_404(Professor, id_professor=professor_id)
     return render(request, 'TelaProfessor.html', {'professor': professor})
@@ -84,23 +112,66 @@ def professor(request):
 def curso(request, id):
     curso_obj = get_object_or_404(Curso, id_curso=id)
     arquivos = Arquivo.objects.filter(aula_id_aula__modulo_id_modulo__curso_id_curso=curso_obj)
-
-
     avaliacoes = Avaliacao.objects.filter(modulo_id_modulo__curso_id_curso=curso_obj)
+
+    arquivos_atividade = arquivos.filter(tipo="atividade")
+    arquivos_biblioteca = arquivos.filter(tipo__in=["pdf", "video"])
+
+    aluno_id = request.session.get('aluno_id')
+    aluno = None
+    progresso = 0
+    visualizados_ids = []
+    provas_concluidas = 0
+    total_arquivos = arquivos.count()
+    total_provas = avaliacoes.count()
+
+    avaliacoes_status = []
+
+    if aluno_id:
+        aluno = get_object_or_404(Aluno, id_aluno=aluno_id)
+
+        visualizados_ids = list(ProgressoArquivo.objects.filter(
+            aluno=aluno,
+            arquivo__in=arquivos,
+            visualizado=True
+        ).values_list('arquivo_id', flat=True))
+
+        visualizados = len(visualizados_ids)
+
+        provas_respondidas_ids = list(RespostaAluno.objects.filter(
+            aluno=aluno,
+            avaliacao__in=avaliacoes
+        ).values_list('avaliacao_id', flat=True).distinct())
+
+        provas_concluidas = len(provas_respondidas_ids)
+
+        for avaliacao in avaliacoes:
+            avaliacoes_status.append({
+                'avaliacao': avaliacao,
+                'respondida': avaliacao.id_avaliacao in provas_respondidas_ids
+            })
+
+        total_itens = total_arquivos + total_provas
+        concluidos = visualizados + provas_concluidas
+        progresso = round((concluidos / total_itens) * 100, 2) if total_itens else 0
 
     return render(request, 'TelaCurso.html', {
         'curso': curso_obj,
-        'arquivos': arquivos,
-        'avaliacoes': avaliacoes
+        'arquivos_atividade': arquivos_atividade,
+        'arquivos_biblioteca': arquivos_biblioteca,
+        'avaliacoes_status': avaliacoes_status,
+        'aluno': aluno,
+        'progresso': progresso,
+        'total_arquivos': total_arquivos,
+        'total_provas': total_provas,
+        'visualizados_ids': visualizados_ids,
+        'provas_concluidas': provas_concluidas,
     })
-
-
-
 
 def aluno(request):
     aluno_id = request.session.get('aluno_id')
     if not aluno_id:
-        return redirect('login') 
+        return redirect('login')
 
     aluno = get_object_or_404(Aluno, id_aluno=aluno_id)
 
@@ -114,14 +185,6 @@ def aluno(request):
         'cursos': cursos,
         'pagamento_sucesso': pagamento_sucesso
     })
-
-def altera(request):
-    curso_id = request.GET.get('id')
-    if not curso_id:
-        return HttpResponse("ID do curso não fornecido.", status=400)
-
-    curso = get_object_or_404(Curso, id_curso=curso_id)
-    return render(request, 'TelaAltCurso.html', {'curso': curso})
 
 def seleciona(request):
     cursos = Curso.objects.all()
@@ -218,7 +281,7 @@ def salvar_material(request):
         Arquivo.objects.create(
             tipo=tipo,
             descricao=descricao,
-            url_arquivo=arquivo,  # ✅ Salva o arquivo corretamente
+            url_arquivo=arquivo,  # Salva o arquivo corretamente
             aula_id_aula=aula
         )
 
@@ -274,7 +337,7 @@ def salvarcurso(request):
         duracao = request.POST.get("duracaoCurso")
         valor = request.POST.get('valorCurso')
         imagem = request.FILES.get("imagemCurso")
-    
+
         try:
             Curso.objects.create(
                 nome=titulo,
@@ -287,8 +350,8 @@ def salvarcurso(request):
             return redirect("home")
         except IntegrityError:
             return HttpResponse("Erro: Curso com esse nome já existe.")
-        
-        
+
+
 def criar_avaliacao(request):
     if request.method == 'POST':
         curso_id = request.POST.get('curso_id')
@@ -593,3 +656,312 @@ def buscar_cursos(request):
         'aluno_logado': bool(aluno_id),
         'professor_logado': bool(professor_id)
     })
+
+def altera(request):
+    curso_id = request.GET.get('id')
+    if not curso_id:
+        return HttpResponse("ID do curso não fornecido.", status=400)
+
+    curso = get_object_or_404(Curso, id_curso=curso_id)
+    arquivos = Arquivo.objects.filter(aula_id_aula__modulo_id_modulo__curso_id_curso=curso)
+    provas = Avaliacao.objects.filter(modulo_id_modulo__curso_id_curso=curso)
+    foruns = Forum.objects.filter(curso=curso)
+
+    return render(request, 'TelaAltCurso.html', {
+        'curso': curso,
+        'arquivos': arquivos,
+        'provas': provas,
+        'foruns': foruns,
+    })
+def deletar_arquivo(request, arquivo_id):
+    curso_id = request.GET.get('curso_id')
+    arquivo = get_object_or_404(Arquivo, id=arquivo_id)
+    arquivo.delete()
+    return redirect(f'{reverse("Altera")}?id={curso_id}')
+
+def editar_arquivo(request, arquivo_id):
+    curso_id = request.GET.get('curso_id')
+    arquivo = get_object_or_404(Arquivo, id=arquivo_id)
+
+    if request.method == 'POST':
+        arquivo.tipo = request.POST.get('tipo')
+        arquivo.descricao = request.POST.get('descricao')
+        novo_arquivo = request.FILES.get('arquivo')
+        if novo_arquivo:
+            arquivo.url_arquivo = novo_arquivo
+        arquivo.save()
+        return redirect(f'{reverse("Altera")}?id={curso_id}')
+
+    return render(request, 'TelaEditarArquivo.html', {
+        'arquivo': arquivo,
+        'curso_id': curso_id
+    })
+def deletar_prova(request, avaliacao_id):
+    curso_id = request.GET.get('curso_id')
+    avaliacao = get_object_or_404(Avaliacao, id_avaliacao=avaliacao_id)
+
+    # Deletar as relações de QuestaoHasAvaliacao que referenciam essa avaliação
+    QuestaoHasAvaliacao.objects.filter(avaliacao_id_avaliacao=avaliacao).delete()
+
+    # Agora pode deletar a avaliação
+    avaliacao.delete()
+
+    return redirect(f'{reverse("Altera")}?id={curso_id}')
+def deletar_forum(request, forum_id):
+    curso_id = request.GET.get('curso_id')
+    forum = get_object_or_404(Forum, id_forum=forum_id)
+    forum.delete()
+    return redirect(f'{reverse("Altera")}?id={curso_id}')
+def registrar_visualizacao(request, arquivo_id):
+    if request.method == 'POST':
+        aluno_id = request.session.get('aluno_id')
+        if not aluno_id:
+            return JsonResponse({'error': 'Usuário não autenticado'}, status=401)
+
+        aluno = get_object_or_404(Aluno, id_aluno=aluno_id)
+        arquivo = get_object_or_404(Arquivo, id=arquivo_id)
+
+        progresso, _ = ProgressoArquivo.objects.get_or_create(aluno=aluno, arquivo=arquivo)
+        progresso.visualizado = True
+        progresso.save()
+
+        curso = arquivo.aula_id_aula.modulo_id_modulo.curso_id_curso
+        progresso_percentual = calcular_progresso_arquivos(aluno, curso)
+
+        return JsonResponse({
+            'status': 'ok',
+            'progresso': progresso_percentual
+        })
+
+    return JsonResponse({'error': 'Método não permitido'}, status=405)
+def calcular_progresso_arquivos(aluno, curso):
+    total_arquivos = Arquivo.objects.filter(
+        aula_id_aula__modulo_id_modulo__curso_id_curso=curso
+    ).count()
+
+    if total_arquivos == 0:
+        return 0
+
+    visualizados = ProgressoArquivo.objects.filter(
+        aluno=aluno,
+        arquivo__aula_id_aula__modulo_id_modulo__curso_id_curso=curso,
+        visualizado=True
+    ).count()
+
+    progresso = (visualizados / total_arquivos) * 100
+    return round(progresso, 2)
+def baixar_arquivo(request, arquivo_id):
+    aluno_id = request.session.get('aluno_id')
+    if not aluno_id:
+        return redirect('login')
+
+    aluno = get_object_or_404(Aluno, id_aluno=aluno_id)
+    arquivo = get_object_or_404(Arquivo, id=arquivo_id)
+
+    if not arquivo.url_arquivo:
+        raise Http404("Arquivo não encontrado.")
+
+    # Marca como visualizado
+    progresso, _ = ProgressoArquivo.objects.get_or_create(aluno=aluno, arquivo=arquivo)
+    progresso.visualizado = True
+    progresso.save()
+
+    caminho = arquivo.url_arquivo.path
+    if os.path.exists(caminho):
+        return FileResponse(open(caminho, 'rb'), as_attachment=True, filename=os.path.basename(caminho))
+    else:
+        raise Http404("Arquivo não encontrado no servidor.")
+
+def admin_dashboard(request):
+    admin_id = request.session.get('admin_id')
+    if not admin_id:
+        return redirect('login')
+
+    admin = get_object_or_404(Administrador, id_administrador=admin_id)
+
+    # Fetch data for admin dashboard
+    total_cursos = Curso.objects.count()
+    total_alunos = Aluno.objects.count()
+    total_professores = Professor.objects.count()
+    recent_messages = MensagemContato.objects.order_by('-data_envio')[:5]
+
+    context = {
+        'admin': admin,
+        'total_cursos': total_cursos,
+        'total_alunos': total_alunos,
+        'total_professores': total_professores,
+        'recent_messages': recent_messages,
+    }
+    return render(request, 'TelaAdmin.html', context)
+
+def gerenciar_cursos(request):
+    admin_id = request.session.get('admin_id')
+    if not admin_id:
+        return redirect('login')
+    cursos = Curso.objects.all().order_by('nome')
+    return render(request, 'TelaGerenciarCursos.html', {'cursos': cursos})
+
+def editar_curso(request, curso_id):
+    admin_id = request.session.get('admin_id')
+    if not admin_id:
+        return redirect('login')
+
+    curso = get_object_or_404(Curso, id_curso=curso_id)
+
+    if request.method == 'POST':
+        curso.nome = request.POST.get("nome")
+        curso.descricao = request.POST.get("descricao")
+        curso.objetivo = request.POST.get("objetivo")
+        curso.carga_horaria = int(request.POST.get("carga_horaria").replace("h", "").strip())
+        curso.valor = request.POST.get("valor")
+        if request.FILES.get("imagem"):
+            curso.imagem = request.FILES.get("imagem")
+        curso.save()
+        messages.success(request, "Curso atualizado com sucesso!")
+        return redirect('gerenciar_cursos')
+    return render(request, 'TelaEditarCurso.html', {'curso': curso})
+
+def deletar_curso(request, curso_id):
+    admin_id = request.session.get('admin_id')
+    if not admin_id:
+        return redirect('login')
+
+    curso = get_object_or_404(Curso, id_curso=curso_id)
+    curso.delete()
+    messages.success(request, "Curso deletado com sucesso!")
+    return redirect('gerenciar_cursos')
+
+# Certifique-se de que sua função gerenciar_usuarios passa os dados corretos:
+def gerenciar_usuarios(request):
+    admin_id = request.session.get('admin_id')
+    if not admin_id:
+        return redirect('login') # Redireciona se não for admin
+
+    alunos = Aluno.objects.all().order_by('nome')
+    professores = Professor.objects.all().order_by('nome')
+
+    context = {
+        'alunos': alunos,
+        'professores': professores,
+        # 'perfil_gerenciado': 'aluno' ou 'professor' ou 'administrador' (se você usar isso)
+    }
+    return render(request, 'TelaGerenciarUsuarios.html', context)
+
+def editar_aluno(request, aluno_id):
+    admin_id = request.session.get('admin_id')
+    if not admin_id:
+        return redirect('login')
+
+    aluno = get_object_or_404(Aluno, id_aluno=aluno_id)
+
+    if request.method == 'POST':
+        aluno.nome = request.POST.get("nome")
+        aluno.email = request.POST.get("email")
+        aluno.telefone = request.POST.get("telefone")
+        aluno.cpf = request.POST.get("cpf")
+        if request.POST.get("senha"):
+            aluno.senha = request.POST.get("senha")
+        if request.FILES.get("foto_perfil"):
+            aluno.foto_perfil = request.FILES.get("foto_perfil")
+        aluno.save()
+        messages.success(request, "Aluno atualizado com sucesso!")
+        return redirect('gerenciar_usuarios')
+    return render(request, 'TelaEditarAluno.html', {'usuario': aluno, 'perfil_tipo': 'aluno'})
+
+def deletar_aluno(request, aluno_id):
+    admin_id = request.session.get('admin_id')
+    if not admin_id:
+        return redirect('login')
+
+    aluno = get_object_or_404(Aluno, id_aluno=aluno_id)
+    aluno.delete()
+    messages.success(request, "Aluno deletado com sucesso!")
+    return redirect('gerenciar_usuarios')
+
+def editar_professor(request, professor_id):
+    admin_id = request.session.get('admin_id')
+    if not admin_id:
+        return redirect('login')
+
+    professor = get_object_or_404(Professor, id_professor=professor_id)
+
+    if request.method == 'POST':
+        professor.nome = request.POST.get("nome")
+        professor.email = request.POST.get("email")
+        professor.telefone = request.POST.get("telefone")
+        professor.cpf = request.POST.get("cpf")
+        if request.POST.get("senha"):
+            professor.senha = request.POST.get("senha")
+        professor.formacao = request.POST.get("formacao")
+        professor.experiencia = request.POST.get("experiencia")
+        if request.FILES.get("foto_perfil"):
+            professor.foto_perfil = request.FILES.get("foto_perfil")
+        professor.save()
+        messages.success(request, "Professor atualizado com sucesso!")
+        return redirect('gerenciar_usuarios')
+    return render(request, 'TelaEditarProfessor.html', {'usuario': professor, 'perfil_tipo': 'professor'})
+
+def deletar_professor(request, professor_id):
+    admin_id = request.session.get('admin_id')
+    if not admin_id:
+        return redirect('login')
+
+    professor = get_object_or_404(Professor, id_professor=professor_id)
+    professor.delete()
+    messages.success(request, "Professor deletado com sucesso!")
+    return redirect('gerenciar_usuarios')
+
+def listar_mensagens_contato(request):
+    admin_id = request.session.get('admin_id')
+    if not admin_id:
+        return redirect('login')
+    mensagens = MensagemContato.objects.all().order_by('-data_envio')
+    return render(request, 'TelaListarMensagensContato.html', {'mensagens': mensagens})
+def inativar_aluno(request, aluno_id):
+    admin_id = request.session.get('admin_id')
+    if not admin_id:
+        messages.error(request, "Acesso negado. Apenas administradores podem inativar alunos.")
+        return redirect('login') # Ou para uma página de erro/dashboard
+
+    aluno = get_object_or_404(Aluno, id_aluno=aluno_id)
+    aluno.is_active = False
+    aluno.save()
+    messages.success(request, f"Aluno(a) {aluno.nome} inativado(a) com sucesso!")
+    return redirect('gerenciar_usuarios') # Redireciona de volta para a tela de gerenciamento
+
+def ativar_aluno(request, aluno_id):
+    admin_id = request.session.get('admin_id')
+    if not admin_id:
+        messages.error(request, "Acesso negado. Apenas administradores podem ativar alunos.")
+        return redirect('login') # Ou para uma página de erro/dashboard
+
+    aluno = get_object_or_404(Aluno, id_aluno=aluno_id)
+    aluno.is_active = True
+    aluno.save()
+    messages.success(request, f"Aluno(a) {aluno.nome} ativado(a) com sucesso!")
+    return redirect('gerenciar_usuarios') # Redireciona de volta para a tela de gerenciamento
+
+def inativar_professor(request, professor_id):
+    admin_id = request.session.get('admin_id')
+    if not admin_id:
+        messages.error(request, "Acesso negado. Apenas administradores podem inativar professores.")
+        return redirect('login') # Ou para uma página de erro/dashboard
+
+    professor = get_object_or_404(Professor, id_professor=professor_id)
+    professor.is_active = False
+    professor.save()
+    messages.success(request, f"Professor(a) {professor.nome} inativado(a) com sucesso!")
+    return redirect('gerenciar_usuarios') # Redireciona de volta para a tela de gerenciamento
+
+def ativar_professor(request, professor_id):
+    admin_id = request.session.get('admin_id')
+    if not admin_id:
+        messages.error(request, "Acesso negado. Apenas administradores podem ativar professores.")
+        return redirect('login') # Ou para uma página de erro/dashboard
+
+    professor = get_object_or_404(Professor, id_professor=professor_id)
+    professor.is_active = True
+    professor.save()
+    messages.success(request, f"Professor(a) {professor.nome} ativado(a) com sucesso!")
+    return redirect('gerenciar_usuarios') # Redireciona de volta para a tela de gerenciamento
+
