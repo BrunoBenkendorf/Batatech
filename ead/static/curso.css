@@ -14,7 +14,7 @@ a {
 
 /* Corpo */
 body {
-  font-family: Arial, sans-serif;
+  font-family: "Rajdhani", sans-serif;
   background:#fdf5ad;
 }
 
@@ -44,6 +44,22 @@ img {
 
 .sessao-curso {
   margin: 30px 0;
+}
+
+.sessao-curso h2 {
+  -webkit-text-stroke-width: 0.5px;
+  -webkit-text-stroke-color: #e67e22;
+  color: black;
+}
+.sessao-curso h1 {
+  -webkit-text-stroke-width: 1px;
+  -webkit-text-stroke-color: black;
+  color: #e67e22;
+}
+.sessao-curso p {
+  -webkit-text-stroke-width: 0.2px;
+  -webkit-text-stroke-color: #e67e22;
+  color: black;
 }
 
 .sessao-curso img {

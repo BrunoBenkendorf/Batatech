@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>BataTECH - Painel Administrativo</title>
+  <title>BataTECH Cursos EAD</title>
   {% load static %}
   <link rel="stylesheet" href="{% static 'admin.css' %}">
   <link rel="stylesheet" href="{% static 'perfil.css' %}">
@@ -38,10 +38,7 @@
           </nav>
           <div class="user-dropdown" id="userDropdown">
             <div class="user-info-prof" id="userInfo">
-              <div class="user-icon-prof">
-                👤
-              </div>
-              <span>Administrador</span>
+              <span class="usuario">Administrador</span>
               <i class="bi bi-caret-down-fill"></i>
             </div>
             <div class="dropdown-content" id="dropdownMenu">
@@ -57,7 +54,7 @@
   <main class="main-content">
     <br><br><br><br>
     <div class="white-container">
-      <h1 style="text-align: center; margin-bottom: 40px;">Painel Administrativo</h1>
+      <h1 class="ad">Painel Administrativo</h1>
   
       <div class="admin-dashboard-summary">
           <div class="summary-card">
@@ -76,15 +73,15 @@
   </div>
 
     <section class="course-section">
-      <h2>Gestão de Cursos:</h2>
-      <img src="{% static 'imagens/criarcursos.png' %}" alt="Gerenciar Cursos">
+      <h2 class="gestao">Gestão de Cursos:</h2>
+      <img src="{% static 'imagens/gerenciarcursos.png' %}" alt="Gerenciar Cursos">
       <div class="text-box">
         <a href="{% url 'gerenciar_cursos' %}" class="btn btn-white btn-animate">Gerenciar Cursos</a>
       </div>
     </section>
 
     <section class="course-section">
-      <h2>Gestão de Usuários:</h2>
+      <h2 class="gestao">Gestão de Usuários:</h2>
       <img src="{% static 'imagens/gerenciarusuarios.png' %}" alt="Gerenciar Usuários">
       <div class="text-box">
         <a href="{% url 'gerenciar_usuarios' %}" class="btn btn-white btn-animate">Gerenciar Usuários</a>
@@ -92,7 +89,7 @@
     </section>
 
     <section class="course-section">
-      <h2>Mensagens de Contato:</h2>
+      <h2 class="gestao">Mensagens de Contato:</h2>
       <img src="{% static 'imagens/mensagensdecontato.png' %}" alt="Mensagens de Contato">
       <div class="text-box">
         <a href="{% url 'listar_mensagens_contato' %}" class="btn btn-white btn-animate">Ver Mensagens</a>

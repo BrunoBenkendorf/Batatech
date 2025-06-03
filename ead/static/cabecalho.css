@@ -36,7 +36,9 @@ h1 {
   font-family: "Modak", system-ui;
   font-weight: 400;
   font-size: 45px;
-  color: #eb9f5c;
+  -webkit-text-stroke-width: 1px;
+  -webkit-text-stroke-color:#e67e22;
+  color: #000;
 }
 
 /* Pesquisa */
@@ -111,8 +113,10 @@ header ul li {
 }
 
 header ul li a {
-  color: black;
   text-decoration: none;
+  -webkit-text-stroke-width: 0.5px;
+  -webkit-text-stroke-color: #e67e22;
+  color: black;
 }
 
 /* Usuário */
@@ -165,4 +169,11 @@ header ul li a {
 .dropdown-content a:hover {
   background-color: #eb9f5c;
   color: white;
+}
+.usuario{
+  font-family: "Modak", system-ui;
+  font-size: 22px;
+  -webkit-text-stroke-width: 0.5px;
+  -webkit-text-stroke-color:#e67e22;
+  color: #000;
 }

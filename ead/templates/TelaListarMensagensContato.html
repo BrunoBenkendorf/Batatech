@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mensagens de Contato - Admin</title>
+    <title>BataTECH Cursos EAD</title>
     {% load static %}
     <link rel="stylesheet" href="{% static 'prof.css' %}">
         <link rel="stylesheet" href="{% static 'mensagem.css' %}">
@@ -36,10 +36,7 @@
                 </ul>
               </nav>
               <div class="user-dropdown" id="userDropdown">
-                <div class="user-icon-prof">
-                    👤
-                </div>
-                <span>Administrador</span>
+                <span class="usuario">Administrador</span>
                 <i class="bi bi-caret-down-fill"></i>
                 </div>
                 <div class="dropdown-content" id="dropdownMenu">
@@ -53,8 +50,18 @@
       </header>
 
     <main class="main-content">
+      <div style="
+                display: flex;
+                justify-content: flex-start;
+                padding: 0px 6px;
+            ">
+            <a href="javascript:history.back()" class="btn btn-white"
+                style="background-color: black; color: white; padding: 10px 30px">
+                <i class="bi bi-arrow-left-circle-fill" style="margin-right: 8px"></i>Voltar
+            </a>
+        </div>
         <div class="messages-container">
-            <h1>Mensagens de Contato</h1>
+            <h1 class="gen">Mensagens de Contato</h1>
 
             {% if mensagens %}
                 <ul class="message-list">

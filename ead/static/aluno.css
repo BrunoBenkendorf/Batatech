@@ -66,13 +66,6 @@ header.rolagem {
   justify-content: space-between;
 }
 
-/* Logo */
-h1 {
-  font-family: "Modak", system-ui;
-  font-weight: 400;
-  font-size: 45px;
-  color: #eb9f5c;
-}
 
 /* Pesquisa */
 .pesquisa-container {
@@ -194,9 +187,20 @@ header ul li a {
 
 
 .principal {
+  font-family: "Rajdhani", sans-serif;
+  font-size: 18px;
   text-align: center;
   padding: 140px 20px 20px 20px;
+  -webkit-text-stroke-width: 0.5px;
+  -webkit-text-stroke-color: #e67e22;
+  color: black;
   /* padding-top aumentado por causa do header fixo */
+}
+
+.principal p {
+  font-family: "Rajdhani", sans-serif;
+  font-size: 22px;
+  color: #e67e22;
 }
 
 .sessao-curso {

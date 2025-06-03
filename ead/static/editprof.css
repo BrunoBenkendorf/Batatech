@@ -1,67 +1,70 @@
-.edit-user-container {
-    max-width: 600px;
-    margin: 40px auto;
-    padding: 30px;
-    background-color: #f9f9f9;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
+ .edit-user-container {
+     max-width: 600px;
+     margin: 40px auto;
+     padding: 30px;
+     background-color: #f9f9f9;
+     border-radius: 8px;
+     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+ }
 
-.edit-user-container h1 {
-    text-align: center;
-    color: #333;
-    margin-bottom: 30px;
-}
+ .edit-user-container h1 {
+  text-align: center; 
+  margin-bottom: 40px;
+  color: #e67e22;
+  -webkit-text-stroke-width: 1px;
+  -webkit-text-stroke-color:#000;
+  font-size: 30px;
+ }
 
-.edit-user-form label {
-    display: block;
-    margin-bottom: 8px;
-    font-weight: bold;
-    color: #555;
-}
+ .edit-user-form label {
+     display: block;
+     margin-bottom: 8px;
+     font-weight: bold;
+     color: #555;
+ }
 
-.edit-user-form input[type="text"],
-.edit-user-form input[type="email"],
-.edit-user-form input[type="tel"],
-.edit-user-form input[type="password"],
-.edit-user-form input[type="file"],
-.edit-user-form textarea {
-    width: calc(100% - 22px);
-    padding: 10px;
-    margin-bottom: 20px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    font-size: 1em;
-}
+ .edit-user-form input[type="text"],
+ .edit-user-form input[type="email"],
+ .edit-user-form input[type="tel"],
+ .edit-user-form input[type="password"],
+ .edit-user-form input[type="file"],
+ .edit-user-form textarea {
+     width: calc(100% - 22px);
+     padding: 10px;
+     margin-bottom: 20px;
+     border: 1px solid #ddd;
+     border-radius: 5px;
+     font-size: 1em;
+ }
 
-.edit-user-form button {
-    display: block;
-    width: 100%;
-    padding: 12px;
-    background-color: #e67e22;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    font-size: 1.1em;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
+ .edit-user-form button {
+     display: block;
+     width: 100%;
+     padding: 12px;
+     background-color: #e67e22;
+     color: white;
+     border: none;
+     border-radius: 5px;
+     font-size: 1.1em;
+     cursor: pointer;
+     transition: background-color 0.3s ease;
+ }
 
-.edit-user-form button:hover {
-    background-color: #e67e22;
-}
+ .edit-user-form button:hover {
+     background-color: #e67e22;
+ }
 
-.messages {
-    list-style: none;
-    padding: 0;
-    margin: 20px 0;
-}
+ .messages {
+     list-style: none;
+     padding: 0;
+     margin: 20px 0;
+ }
 
-.messages li.success {
-    background-color: #d4edda;
-    color: #155724;
-    border: 1px solid #c3e6cb;
-    padding: 10px;
-    border-radius: 5px;
-    margin-bottom: 10px;
-}
+ .messages li.success {
+     background-color: #d4edda;
+     color: #155724;
+     border: 1px solid #c3e6cb;
+     padding: 10px;
+     border-radius: 5px;
+     margin-bottom: 10px;
+ }

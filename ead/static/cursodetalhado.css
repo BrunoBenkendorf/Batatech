@@ -139,6 +139,12 @@ h1 {
     color: black;
 }
 
+.info-curso p {
+    font-family: "Rajdhani", sans-serif;
+    font-size: 20px;
+    color: black;
+}
+
 .banner {
     margin: 0;
     background:#fdf5ad;

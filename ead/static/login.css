@@ -1,6 +1,7 @@
+@import url('https://fonts.googleapis.com/css2?family=Modak&family=Titan+One&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;400;500;600;700&display=swap');
 * {
   box-sizing: border-box;
-  font-family: 'Inter', sans-serif;
 }
 
 body {
@@ -81,4 +82,9 @@ body {
 .help-links a {
   color: #333;
   text-decoration: none;
+}
+.textlogin{
+  font-family: "Modak", system-ui;
+  -webkit-text-stroke-width: 1px;
+  -webkit-text-stroke-color:#e67e22;
 }

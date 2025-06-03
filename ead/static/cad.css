@@ -1,20 +1,12 @@
 /* Garante que o HTML e o body ocupem toda a altura */
+@import url('https://fonts.googleapis.com/css2?family=Modak&family=Titan+One&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;400;500;600;700&display=swap');
 html,
 body {
   height: 100%;
   margin: 0;
   padding: 0;
 }
-
-/* Cor de fundo personalizada que cobre toda a página */
-.bg-custom {
-  min-height: 100%;
-  background:#fdf5ad;
-  background-attachment: fixed;
-  background-size: cover;
-}
-
-
 @keyframes moveInBottom {
   0% {
     opacity: 0;
@@ -25,4 +17,13 @@ body {
     opacity: 1;
     transform: translateY(0px);
   }
+}
+.cad{
+  font-family: "Modak", system-ui;
+  text-align: center; 
+  margin-bottom: 40px;
+  color: #e67e22;
+  -webkit-text-stroke-width: 1px;
+  -webkit-text-stroke-color:#000;
+  font-size: 30px;
 }

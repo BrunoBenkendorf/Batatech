@@ -192,3 +192,15 @@ a {
       margin-top: 15px;
   }
 }
+.ad{
+  text-align: center; 
+  margin-bottom: 40px;
+  color: #e67e22;
+  -webkit-text-stroke-width: 1px;
+  -webkit-text-stroke-color:#000;
+}
+.gestao{
+  color: #000;
+  -webkit-text-stroke-width: 0.5px;
+  -webkit-text-stroke-color:#e67e22;
+}

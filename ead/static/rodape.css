@@ -1,5 +1,6 @@
 /* Rodapé */
 @import url('https://fonts.googleapis.com/css2?family=Modak&family=Titan+One&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;400;500;600;700&display=swap');
 
 html,
 body {
@@ -19,9 +20,6 @@ main {
   color: black;
   padding: 20px 10px;
   font-size: 12px;
-  border: black;
-  border-style: solid;
-  border-top: 1px;
 }
 
 .footer-top {
@@ -36,7 +34,9 @@ main {
   font-family: "Modak", system-ui;
   font-weight: 300;
   font-size: 35px;
-  color: #eb9f5c;
+  -webkit-text-stroke-width: 1px;
+  -webkit-text-stroke-color:#e67e22;
+  color: #000;
 }
 
 .footer-bottom {
@@ -45,6 +45,9 @@ main {
 
 .footer-bottom p {
   margin: 5px 0;
+  font-family: "Rajdhani", sans-serif;
+  color: #000;
+  font-size: 15px;
 }
 
 .footer-links {
@@ -55,6 +58,8 @@ main {
   color: black;
   text-decoration: none;
   margin: 0 5px;
+  font-family: "Rajdhani", sans-serif;
+  color: #000;
 }
 
 .footer-links a:hover {
@@ -63,12 +68,13 @@ main {
 
 .dot {
   margin: 0 3px;
-  color: #ccc;
+  color: #000;
 }
 
 /* Linha separadora */
 hr {
   border: none;
-  border-top: 1px solid #4d5a6b;
+  border-top: 1px solid #000;
   margin: 10px 0;
 }
+ 

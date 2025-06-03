@@ -204,7 +204,7 @@ def altera(request):
     provas = Avaliacao.objects.filter(modulo_id_modulo__curso_id_curso=curso)
     foruns = Forum.objects.filter(curso=curso)
 
-    return render(request, 'TelaAltCurso.html', {
+    return render(request, 'TelaGerenciarArquivos.html', {
         'curso': curso,
         'arquivos': arquivos,
         'provas': provas,

@@ -8,9 +8,12 @@
  }
 
  .edit-user-container h1 {
-     text-align: center;
-     color: #333;
-     margin-bottom: 30px;
+  text-align: center; 
+  margin-bottom: 40px;
+  color: #e67e22;
+  -webkit-text-stroke-width: 1px;
+  -webkit-text-stroke-color:#000;
+  font-size: 30px;
  }
 
  .edit-user-form label {

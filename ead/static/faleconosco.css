@@ -1,5 +1,7 @@
+@import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;400;500;600;700&display=swap');
+
 body {
-  font-family: 'Inter', sans-serif;
+  font-family: "Rajdhani", sans-serif;
   background: #fdf5ad;
   padding: 2em;
   display: flex;
@@ -16,9 +18,13 @@ body {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
+.form-container h2 {
+  font-size: 20px;
+}
+
 h2 {
   margin-bottom: 1em;
-  color: #333;
+  color: #000000;
 }
 
 label {
@@ -31,7 +37,7 @@ label {
 select {
   width: 100%;
   padding: 0.8em;
-  border: 1px solid #ccc;
+  border: 1px solid #000000;
   border-radius: 6px;
   font-size: 1em;
 }
@@ -39,7 +45,7 @@ select {
 textarea {
   width: 96%;
   padding: 0.8em;
-  border: 1px solid #ccc;
+  border: 1px solid #000000;
   border-radius: 6px;
   font-size: 1em;
 }
@@ -47,7 +53,7 @@ textarea {
 input {
   width: 95%;
   padding: 0.8em;
-  border: 1px solid #ccc;
+  border: 1px solid #000000;
   border-radius: 6px;
   font-size: 1em;
 }

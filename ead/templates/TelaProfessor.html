@@ -46,7 +46,7 @@
                   👤
                 {% endif %}
               </div>
-              <span>{{ professor.nome }}</span>
+              <span class="usuario">{{ professor.nome }}</span>
               <i class="bi bi-caret-down-fill"></i>
             </div>
             <div class="dropdown-content" id="dropdownMenu">
@@ -65,7 +65,7 @@
     <br><br><br><br>
 
     <section class="course-section">
-      <h2>Gerenciar Arquivos:</h2>
+      <h2 class="textos">Gerenciar Arquivos:</h2>
       <img src="{% static 'imagens/gerenciararquivos.png' %}" alt="Gerenciar Arquivos">
       <div class="text-box">
         <a href="../seleciona" class="btn btn-white btn-animate">Gerenciar</a>
@@ -73,7 +73,7 @@
     </section>
 
     <section class="course-section">
-      <h2>Criar Cursos:</h2>
+      <h2 class="textos">Criar Cursos:</h2>
       <img src="{% static 'imagens/criarcursos.png' %}" alt="Criar Cursos">
       <div class="text-box">
         <a href="../cadcurso" class="btn btn-white btn-animate">Criar</a>
@@ -81,7 +81,7 @@
     </section>
 
     <section class="course-section">
-      <h2>Fóruns dos Cursos:</h2>
+      <h2 class="textos">Fóruns dos Cursos:</h2>
       <img src="{% static 'imagens/forum.png' %}" alt="Fóruns dos Cursos">
       <div class="text-box">
         <a href="{% url 'seleciona_forum' %}" class="btn btn-white btn-animate">Fóruns dos Cursos</a>
