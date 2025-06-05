@@ -5,8 +5,9 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>BataTECH Cursos EAD</title>
+  {% load static %}
   <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="icon" href="{% static 'imagens/favicon.png' %}" type="image/png" />
+    <link rel="icon" href="{% static 'imagens/favicon.png' %}" type="image/png" />
 </head>
 
 <body class="bg-yellow-100 min-h-screen p-6">
@@ -36,10 +37,7 @@
     {% endif %}
 
     <div class="mt-8 text-center">
-      <a href="{% url 'professor' %}"
-        class="inline-block bg-orange-500 hover:bg-orange-600 text-white px-6 py-3 rounded transition">
-        Voltar ao Dashboard
-      </a>
+      <a href="javascript:history.back()" class="bg-gray-200 hover:bg-gray-300 px-4 py-2 rounded">Voltar</a>
     </div>
   </div>
 </body>

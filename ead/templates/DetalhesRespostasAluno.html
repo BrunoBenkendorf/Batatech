@@ -4,10 +4,12 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>BataTECH Cursos EAD</title>
+  {% load static %}
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="icon" type="image/png" href="{% static 'imagens/favicon.png' %}">
 </head>
 <body class="bg-yellow-100 min-h-screen p-6">
+    <script src="{% static 'js/configglobal.js' %}"></script>
   <div class="max-w-4xl mx-auto bg-white p-8 rounded shadow">
     <h1 class="text-3xl font-bold text-gray-800 mb-6 text-center">
       Respostas de {{ aluno.nome }} <br />

@@ -4,6 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <title>BataTECH Cursos EAD</title>
+  {% load static %}
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="icon" href="{% static 'imagens/favicon.png' %}" type="image/png" />
 </head>
@@ -30,10 +31,7 @@
     {% endif %}
 
     <div class="mt-8">
-      <a href="{% url 'aluno' %}"
-        class="inline-block bg-orange-500 hover:bg-orange-600 text-white px-6 py-2 rounded transition">
-        Voltar
-      </a>
+      <a href="javascript:history.back()" class="bg-gray-200 hover:bg-gray-300 px-4 py-2 rounded">Voltar</a>
     </div>
   </div>
 </body>

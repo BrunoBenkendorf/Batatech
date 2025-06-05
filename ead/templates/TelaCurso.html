@@ -52,7 +52,7 @@
                                 👤
                                 {% endif %}
                             </div>
-                            <span>{{ aluno.nome }}</span>
+                            <span class="usuario">{{ aluno.nome }}</span>
                             <i class="bi bi-caret-down-fill"></i>
                         </div>
                         <div class="dropdown-content" id="dropdownMenu">
@@ -78,10 +78,8 @@
                 <i class="bi bi-arrow-left-circle-fill" style="margin-right: 8px"></i>Voltar
             </a>
         </div>
-
-        <section class="sessao-curso">
+        <div class="barra">
             <h2>Curso: {{ curso.nome }}</h2>
-
             <div class="barra-progresso" data-progresso="{{ progresso }}">
                 <p>
                     Progresso do curso: <strong>{{ progresso }}%</strong><br />
@@ -92,8 +90,8 @@
                     <div class="barra-progresso-preenchimento"></div>
                 </div>
             </div>
-
-
+        </div>
+        <section class="sessao-curso">
             <div class="aba-navegacao">
                 <button class="aba ativo" onclick="trocarAba('atividades', event)">
                     Atividades
